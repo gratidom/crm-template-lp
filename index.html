@@ -4,9 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Template de CRM — Next.js 16 + Supabase | gratidOM</title>
-<meta name="description" content="Um CRM multi-tenant completo, pronto para você instalar, personalizar com a sua marca e publicar no ar. Sem começar do zero, sem precisar programar." />
+<meta name="description" content="Um sistema de CRM multi-tenant completo e profissional, pronto para você instalar, personalizar com a sua marca e publicar. Quer mais funcionalidades? Você descreve em português, o Claude Code constrói." />
+<link rel="icon" href="flor.svg" type="image/svg+xml" />
 <meta property="og:title" content="Template de CRM — Next.js 16 + Supabase" />
-<meta property="og:description" content="CRM completo pronto para instalar, personalizar e publicar. Inclui vídeos de instalação passo a passo." />
+<meta property="og:description" content="CRM completo pronto para instalar, personalizar e publicar. Múltiplos pipelines, automações, UTMs, inbox multicanal e mais." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,15 +28,13 @@
   .mono{font-family:var(--mono)}
   section{position:relative}
 
-  /* atmospheric */
   .glow{position:absolute;top:-320px;left:50%;transform:translateX(-50%);width:1100px;height:700px;background:radial-gradient(circle,rgba(74,222,128,.20)0%,transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
   .dotgrid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05)1.3px,transparent 1.3px);background-size:42px 42px;-webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 30%,#000 35%,transparent 78%);mask-image:radial-gradient(ellipse 70% 55% at 50% 30%,#000 35%,transparent 78%);pointer-events:none;z-index:0}
 
-  /* nav */
   nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(10,10,10,.72);border-bottom:1px solid var(--border)}
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
-  .brand{font-weight:800;letter-spacing:-.02em;font-size:20px}
-  .brand .accent{font-weight:800}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;font-size:19px}
+  .brand img{width:30px;height:30px}
   .btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;border-radius:12px;padding:13px 22px;font-size:15px;transition:transform .15s ease, box-shadow .15s ease;cursor:pointer;border:0}
   .btn-primary{background:var(--accent);color:#05130a;box-shadow:0 0 0 rgba(74,222,128,0)}
   .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(74,222,128,.28)}
@@ -43,51 +42,56 @@
   .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
   .nav-cta{font-size:14px;padding:10px 18px}
 
-  /* hero */
-  .hero{padding:96px 0 80px;text-align:center}
+  .hero{padding:92px 0 78px;text-align:center}
   .badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.08);padding:8px 18px;border-radius:999px}
   .pulse{width:7px;height:7px;border-radius:999px;background:var(--accent);box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:pulse 2s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 10px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
   h1{font-size:clamp(38px,6vw,72px);line-height:1.03;letter-spacing:-.03em;font-weight:800;margin:26px auto 0;max-width:14ch}
-  .sub{color:var(--muted);font-size:clamp(17px,2.2vw,21px);max-width:60ch;margin:22px auto 0}
-  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
-  .price-hint{margin-top:16px;color:var(--muted);font-size:14px}
-  .price-hint b{color:var(--white)}
+  .sub{color:var(--muted);font-size:clamp(17px,2.2vw,20px);max-width:62ch;margin:22px auto 0}
+  .sub b{color:var(--white);font-weight:600}
+  .highlight{display:inline-block;margin-top:20px;font-weight:700;font-size:clamp(17px,2.2vw,20px);color:var(--white);border-bottom:2px solid var(--accent);padding-bottom:3px}
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+  .price-hint{margin-top:18px;color:var(--muted);font-size:15px}
+  .price-hint .old{text-decoration:line-through;opacity:.7;margin-right:6px}
+  .price-hint b{color:var(--accent);font-size:17px}
 
-  /* dashboard mock */
-  .mock{max-width:960px;margin:60px auto 0;position:relative;z-index:1}
+  .mock{max-width:960px;margin:58px auto 0;position:relative;z-index:1}
   .mock-halo{position:absolute;inset:auto 0 -20px;height:120px;max-width:640px;margin:0 auto;background:rgba(74,222,128,.18);filter:blur(70px)}
   .window{border:1px solid var(--border);border-radius:16px;background:var(--panel);overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.55)}
   .titlebar{height:46px;display:flex;align-items:center;gap:8px;padding:0 18px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
   .dot{width:11px;height:11px;border-radius:999px}
-  .mock-body{display:flex;min-height:280px}
-  .side{width:200px;border-right:1px solid var(--border);padding:22px 18px;display:flex;flex-direction:column;gap:14px}
+  .mock-body{display:flex;min-height:290px}
+  .side{width:200px;border-right:1px solid var(--border);padding:22px 18px;display:flex;flex-direction:column;gap:13px}
   .side .item{display:flex;align-items:center;gap:11px;color:var(--muted);font-size:14px}
   .side .item.active{color:var(--white)}
   .side .sq{width:13px;height:13px;border-radius:4px;background:rgba(255,255,255,.28)}
   .side .item.active .sq{background:var(--accent)}
   .content{flex:1;padding:24px}
-  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .kpi{border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.02)}
-  .kpi .k{font-family:var(--mono);font-size:12px;color:var(--muted)}
-  .kpi .v{font-size:24px;font-weight:700;margin-top:2px}
-  .bars{display:flex;align-items:flex-end;gap:12px;height:110px;margin-top:22px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .kpi{border:1px solid var(--border);border-radius:12px;padding:13px 15px;background:rgba(255,255,255,.02)}
+  .kpi .k{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1px}
+  .kpi .v{font-size:22px;font-weight:700;margin-top:2px}
+  .kpi .up{color:var(--accent);font-size:12px}
+  .bars{display:flex;align-items:flex-end;gap:12px;height:96px;margin-top:22px}
   .bar{flex:1;border-radius:7px 7px 0 0;background:linear-gradient(180deg,var(--accent),rgba(74,222,128,.35))}
 
-  /* sections */
-  .s{padding:84px 0}
+  .s{padding:80px 0}
   .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);text-align:center}
   h2{font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;font-weight:800;text-align:center;margin-top:14px;line-height:1.12}
-  .lead{color:var(--muted);text-align:center;max-width:56ch;margin:16px auto 0;font-size:17px}
+  .lead{color:var(--muted);text-align:center;max-width:58ch;margin:16px auto 0;font-size:17px}
 
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:48px}
-  .cell{background:var(--bg);padding:30px 26px}
-  .cell .ico{width:44px;height:44px;border-radius:11px;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.3);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
-  .cell h3{font-size:19px;font-weight:700;letter-spacing:-.01em}
-  .cell p{color:var(--muted);font-size:15px;margin-top:8px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:46px}
+  .cell{background:var(--bg);padding:28px 24px}
+  .cell .tag{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:1px}
+  .cell h3{font-size:18px;font-weight:700;letter-spacing:-.01em;margin-top:12px;display:flex;align-items:center;gap:9px}
+  .cell .ic{font-size:20px}
+  .cell p{color:var(--muted);font-size:14.5px;margin-top:8px}
+  .incl{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--accent);border:1px solid rgba(74,222,128,.3);background:rgba(74,222,128,.08);padding:3px 9px;border-radius:6px}
 
-  /* recebe */
-  .recebe{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:48px}
+  .stack{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:40px}
+  .chip{font-family:var(--mono);font-size:14px;color:var(--muted);border:1px solid var(--border);background:var(--panel);padding:10px 18px;border-radius:10px}
+
+  .recebe{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:46px}
   .checklist{display:flex;flex-direction:column;gap:16px}
   .ck{display:flex;gap:14px;align-items:flex-start}
   .ck .mk{flex:0 0 auto;width:28px;height:28px;border-radius:999px;background:rgba(74,222,128,.14);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:800;font-size:15px}
@@ -99,29 +103,23 @@
   .card-video .n{font-family:var(--mono);font-size:13px;color:var(--accent);width:26px}
   .card-video .play{margin-left:auto;color:var(--muted)}
 
-  /* stack */
-  .stack{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:40px}
-  .chip{font-family:var(--mono);font-size:14px;color:var(--muted);border:1px solid var(--border);background:var(--panel);padding:10px 18px;border-radius:10px}
-
-  /* steps */
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:46px}
   .step{border:1px solid var(--border);border-radius:16px;padding:28px;background:var(--panel)}
   .step .num{font-family:var(--mono);color:var(--accent);font-size:14px}
   .step h3{font-size:19px;margin-top:10px;font-weight:700}
   .step p{color:var(--muted);font-size:15px;margin-top:8px}
 
-  /* offer */
-  .offer{max-width:640px;margin:56px auto 0;border:1px solid rgba(74,222,128,.4);border-radius:24px;background:linear-gradient(180deg,rgba(74,222,128,.06),rgba(255,255,255,.02));padding:44px 40px;text-align:center;position:relative;overflow:hidden}
-  .offer .price{font-size:56px;font-weight:800;letter-spacing:-.03em;margin-top:8px}
-  .offer .price small{display:block;font-size:15px;color:var(--muted);font-weight:500;letter-spacing:0}
-  .offer .old{color:var(--muted);text-decoration:line-through;font-size:18px}
-  .offer ul{list-style:none;text-align:left;max-width:380px;margin:26px auto 0;display:flex;flex-direction:column;gap:12px}
+  .offer{max-width:640px;margin:54px auto 0;border:1px solid rgba(74,222,128,.4);border-radius:24px;background:linear-gradient(180deg,rgba(74,222,128,.06),rgba(255,255,255,.02));padding:44px 40px;text-align:center;position:relative;overflow:hidden}
+  .offer .old{color:var(--muted);text-decoration:line-through;font-size:20px}
+  .offer .price{font-size:58px;font-weight:800;letter-spacing:-.03em;margin-top:2px;line-height:1}
+  .offer .price small{display:block;font-size:15px;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:10px}
+  .offer .save{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--accent);border:1px solid rgba(74,222,128,.3);background:rgba(74,222,128,.08);padding:5px 14px;border-radius:999px}
+  .offer ul{list-style:none;text-align:left;max-width:400px;margin:26px auto 0;display:flex;flex-direction:column;gap:12px}
   .offer li{display:flex;gap:11px;color:var(--muted);font-size:15px}
   .offer li::before{content:"✓";color:var(--accent);font-weight:800}
   .offer .btn{margin-top:30px;font-size:17px;padding:16px 32px;width:100%;justify-content:center}
   .guarantee{display:inline-flex;align-items:center;gap:10px;margin-top:20px;color:var(--muted);font-size:14px}
 
-  /* faq */
   .faq{max-width:760px;margin:44px auto 0;display:flex;flex-direction:column;gap:12px}
   details{border:1px solid var(--border);border-radius:14px;background:var(--panel);padding:0 22px;overflow:hidden}
   summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:600;font-size:16px;display:flex;justify-content:space-between;align-items:center}
@@ -131,6 +129,7 @@
   details p{color:var(--muted);padding:0 0 20px;font-size:15px}
 
   footer{border-top:1px solid var(--border);padding:40px 0;margin-top:40px;text-align:center;color:var(--muted);font-size:14px}
+  footer .brand{justify-content:center;margin-bottom:10px}
 
   @media(max-width:820px){
     .grid{grid-template-columns:1fr}
@@ -146,7 +145,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand">Template de <span class="accent">CRM</span></div>
+    <div class="brand"><img src="flor.svg" alt="gratidOM" /> Template de <span class="accent">CRM</span></div>
     <a class="btn btn-primary nav-cta" href="https://pay.cakto.com.br/KSLx4sz">Quero o template</a>
   </div>
 </nav>
@@ -157,12 +156,13 @@
   <div class="wrap" style="position:relative;z-index:1">
     <span class="badge"><span class="pulse"></span> Next.js 16 · Supabase</span>
     <h1>Tenha o seu próprio <span class="accent">CRM no ar</span></h1>
-    <p class="sub">Um sistema de CRM multi-tenant completo e profissional, pronto para você instalar, personalizar com a sua marca e publicar. Sem começar do zero, sem precisar programar.</p>
+    <p class="sub">Um sistema de CRM multi-tenant completo e profissional, pronto para você instalar, personalizar com a sua marca e publicar. <b>Quer mais funcionalidades? Você descreve em português, o Claude Code constrói.</b></p>
+    <div><span class="highlight">Sem começar do zero, sem precisar programar.</span></div>
     <div class="hero-cta">
       <a class="btn btn-primary" href="https://pay.cakto.com.br/KSLx4sz">Quero o template →</a>
-      <a class="btn btn-ghost" href="#recebe">Ver o que vem incluso</a>
+      <a class="btn btn-ghost" href="#funcionalidades">Ver funcionalidades</a>
     </div>
-    <p class="price-hint">Pagamento único de <b>R$ 297</b> · acesso imediato · 7 dias de garantia</p>
+    <p class="price-hint">De <span class="old">R$ 697</span> por <b>R$ 497</b> · pagamento único · 7 dias de garantia</p>
 
     <div class="mock">
       <div class="mock-halo"></div>
@@ -171,21 +171,24 @@
           <span class="dot" style="background:#ff5f57"></span>
           <span class="dot" style="background:#febc2e"></span>
           <span class="dot" style="background:#28c840"></span>
-          <span class="mono" style="color:var(--muted);font-size:13px;margin-left:12px">seu-crm.com.br</span>
+          <span class="mono" style="color:var(--muted);font-size:13px;margin-left:12px">app.seu-dominio.com.br</span>
         </div>
         <div class="mock-body">
           <div class="side">
             <div class="item active"><span class="sq"></span> Dashboard</div>
             <div class="item"><span class="sq"></span> Contatos</div>
+            <div class="item"><span class="sq"></span> Empresas</div>
             <div class="item"><span class="sq"></span> Negócios</div>
             <div class="item"><span class="sq"></span> Tarefas</div>
             <div class="item"><span class="sq"></span> Inbox</div>
+            <div class="item"><span class="sq"></span> Automações</div>
           </div>
           <div class="content">
             <div class="kpis">
-              <div class="kpi"><div class="k">Negócios</div><div class="v">128</div></div>
-              <div class="kpi"><div class="k">Ganhos/mês</div><div class="v">R$ 42k</div></div>
-              <div class="kpi"><div class="k">Contatos</div><div class="v">1.204</div></div>
+              <div class="kpi"><div class="k">NEGÓCIOS</div><div class="v">128</div><div class="up">↗ +12%</div></div>
+              <div class="kpi"><div class="k">GANHOS/MÊS</div><div class="v">R$ 42k</div><div class="up">↗ +8%</div></div>
+              <div class="kpi"><div class="k">CONTATOS</div><div class="v">1.204</div><div class="up">↗ +5%</div></div>
+              <div class="kpi"><div class="k">CONVERSÃO</div><div class="v">5.8%</div><div class="up">↗ +0.4%</div></div>
             </div>
             <div class="bars">
               <div class="bar" style="height:52%"></div>
@@ -205,20 +208,58 @@
 <section class="s">
   <div class="wrap">
     <div class="eyebrow">O que vem pronto</div>
-    <h2>A fundação chata, já resolvida</h2>
-    <p class="lead">Autenticação, multi-tenant, banco de dados, deploy. Você foca no que torna o seu produto único.</p>
+    <h2>A fundação chata, já pronta</h2>
+    <p class="lead">Auth, multi-tenant, convites, dashboard, deploy. Você foca no que torna o seu produto único.</p>
     <div class="grid">
-      <div class="cell"><div class="ico">🔐</div><h3>Auth + Multi-tenant</h3><p>Login, cadastro, recuperação de senha e workspaces isolados por organização com segurança a nível de banco (RLS).</p></div>
-      <div class="cell"><div class="ico">📇</div><h3>CRM completo</h3><p>Contatos, empresas, negócios (deals) e tarefas com CRUD real, pipeline de vendas e pódio de vendedores.</p></div>
-      <div class="cell"><div class="ico">💬</div><h3>Inbox de WhatsApp</h3><p>Caixa de entrada multicanal integrada com WhatsApp para centralizar o atendimento dos seus clientes.</p></div>
-      <div class="cell"><div class="ico">📊</div><h3>Dashboard com KPIs</h3><p>Painel com indicadores e gráficos já configurados, tema escuro e um design system pronto para usar.</p></div>
-      <div class="cell"><div class="ico">🚀</div><h3>Deploy pronto</h3><p>Dockerfile e docker-compose prontos para publicar em uma VPS com EasyPanel. Guia passo a passo incluso.</p></div>
-      <div class="cell"><div class="ico">⚙️</div><h3>Personalizável</h3><p>Troque nome, cor e marca em um único arquivo de configuração. Type-safe do começo ao fim.</p></div>
+      <div class="cell"><div class="tag">/AUTH</div><h3><span class="ic">🔐</span> Autenticação completa</h3><p>Signup, login, recuperação de senha e confirmação por email, tudo no padrão Supabase.</p><span class="incl">INCLUSO</span></div>
+      <div class="cell"><div class="tag">/MULTI-TENANT</div><h3><span class="ic">🏢</span> Workspaces isolados</h3><p>Organizações com membros, papéis (owner/admin/member) e RLS no Postgres garantindo o isolamento.</p><span class="incl">INCLUSO</span></div>
+      <div class="cell"><div class="tag">/CONVITES</div><h3><span class="ic">✉️</span> Convites por email</h3><p>Envio de convites com Resend (e fallback) e templates de email já desenhados em React Email.</p><span class="incl">INCLUSO</span></div>
+      <div class="cell"><div class="tag">/UI</div><h3><span class="ic">📊</span> Dashboard com tema</h3><p>Cards de KPI, gráficos com Recharts e um design system em tema escuro já configurado.</p><span class="incl">INCLUSO</span></div>
+      <div class="cell"><div class="tag">/DEPLOY</div><h3><span class="ic">🚀</span> Pronto pra deploy</h3><p>Dockerfile, output standalone do Next.js e guia passo a passo para publicar no EasyPanel com SSL.</p><span class="incl">INCLUSO</span></div>
+      <div class="cell"><div class="tag">/DOCS</div><h3><span class="ic">🤖</span> Claude Code first-class</h3><p>Hierarquia de arquivos que orienta o Claude Code nos padrões do projeto. Você fala em português, ele constrói.</p><span class="incl">INCLUSO</span></div>
     </div>
   </div>
 </section>
 
-<section class="s" id="recebe" style="padding-top:20px">
+<section class="s" id="funcionalidades" style="padding-top:20px">
+  <div class="wrap">
+    <div class="eyebrow">Funcionalidades</div>
+    <h2>Um CRM de verdade, não um esqueleto</h2>
+    <p class="lead">Muito além do básico: tudo o que uma operação de vendas e atendimento precisa, já implementado.</p>
+    <div class="grid">
+      <div class="cell"><div class="tag">/PIPELINES</div><h3><span class="ic">🎯</span> Múltiplos pipelines</h3><p>Crie vários funis (vendas, pós-venda e o que precisar) com etapas personalizáveis e arraste negócios entre elas.</p></div>
+      <div class="cell"><div class="tag">/CONTATOS</div><h3><span class="ic">📇</span> Contatos e empresas</h3><p>Cadastro completo de contatos e empresas, com busca automática de dados por CNPJ e histórico de cada relação.</p></div>
+      <div class="cell"><div class="tag">/FORMS</div><h3><span class="ic">📝</span> Formulários de captura</h3><p>Crie formulários e incorpore no seu site com um widget. Os leads caem direto no CRM, prontos para trabalhar.</p></div>
+      <div class="cell"><div class="tag">/UTM</div><h3><span class="ic">🔗</span> Rastreamento de UTMs</h3><p>Capture origem, mídia e campanha (utm_source, medium, campaign) e veja o histórico de UTM de cada contato.</p></div>
+      <div class="cell"><div class="tag">/INBOX</div><h3><span class="ic">💬</span> Inbox multicanal</h3><p>Caixa de entrada unificada com WhatsApp (Cloud API oficial + Evolution) e Instagram para centralizar o atendimento.</p></div>
+      <div class="cell"><div class="tag">/AUTOMAÇÕES</div><h3><span class="ic">⚡</span> Automações</h3><p>Monte fluxos com gatilhos e ações para responder, mover negócios, criar tarefas e economizar tempo da equipe.</p></div>
+      <div class="cell"><div class="tag">/IA</div><h3><span class="ic">✨</span> Agentes de IA</h3><p>Agentes com IA (Anthropic / OpenAI) para qualificar leads e ajudar no atendimento dentro do inbox.</p></div>
+      <div class="cell"><div class="tag">/RELATÓRIOS</div><h3><span class="ic">📈</span> Relatórios de leads</h3><p>Acompanhe a origem e a evolução dos leads com filtros por período, canal e campanha.</p></div>
+      <div class="cell"><div class="tag">/GESTÃO</div><h3><span class="ic">🗂️</span> Tarefas, produtos e equipe</h3><p>Tarefas, catálogo de produtos, etiquetas, funções por vendedor e gestão de equipe já prontos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" style="padding-top:20px">
+  <div class="wrap">
+    <div class="eyebrow">Stack moderna</div>
+    <h2>Tecnologia de ponta, sem gambiarra</h2>
+    <div class="stack">
+      <span class="chip">Next.js 16</span>
+      <span class="chip">React 19</span>
+      <span class="chip">TypeScript</span>
+      <span class="chip">Supabase</span>
+      <span class="chip">PostgreSQL + RLS</span>
+      <span class="chip">Tailwind CSS 4</span>
+      <span class="chip">shadcn/ui</span>
+      <span class="chip">Recharts</span>
+      <span class="chip">Zod</span>
+      <span class="chip">Docker + EasyPanel</span>
+    </div>
+  </div>
+</section>
+
+<section class="s" style="padding-top:20px">
   <div class="wrap">
     <div class="eyebrow">O que você recebe</div>
     <h2>Código, vídeos e documentação</h2>
@@ -227,7 +268,7 @@
         <div class="ck"><span class="mk">✓</span><div><b>Código-fonte completo</b> <span>— o projeto inteiro em Next.js 16 + Supabase, seu para sempre, sem mensalidade.</span></div></div>
         <div class="ck"><span class="mk">✓</span><div><b>7 vídeos de instalação</b> <span>— do arquivo baixado até o sistema rodando, passo a passo, para leigos.</span></div></div>
         <div class="ck"><span class="mk">✓</span><div><b>Documentação completa</b> <span>— 5 capítulos cobrindo instalação, criação de funcionalidades, banco de dados e publicação.</span></div></div>
-        <div class="ck"><span class="mk">✓</span><div><b>Pronto para o Claude Code</b> <span>— padrões documentados para você evoluir o sistema conversando em português.</span></div></div>
+        <div class="ck"><span class="mk">✓</span><div><b>Pronto para o Claude Code</b> <span>— peça novas funcionalidades em português e o Claude constrói seguindo os padrões.</span></div></div>
         <div class="ck"><span class="mk">✓</span><div><b>Acesso imediato</b> <span>— tudo entregue na hora, dentro da área de membros, após a compra.</span></div></div>
       </div>
       <div class="card-video">
@@ -240,24 +281,6 @@
         <div class="row"><span class="n">06</span> Aplicar o banco e rodar <span class="play">▶</span></div>
         <div class="row"><span class="n">07</span> Personalizar e publicar <span class="play">▶</span></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="s" style="padding-top:20px">
-  <div class="wrap">
-    <div class="eyebrow">Stack moderna</div>
-    <h2>Tecnologia de ponta, sem gambiarra</h2>
-    <div class="stack">
-      <span class="chip">Next.js 16</span>
-      <span class="chip">TypeScript</span>
-      <span class="chip">Supabase</span>
-      <span class="chip">PostgreSQL + RLS</span>
-      <span class="chip">Tailwind CSS 4</span>
-      <span class="chip">shadcn/ui</span>
-      <span class="chip">React Hook Form + Zod</span>
-      <span class="chip">Recharts</span>
-      <span class="chip">Docker + EasyPanel</span>
     </div>
   </div>
 </section>
@@ -282,9 +305,12 @@
       <div class="dotgrid"></div>
       <div style="position:relative;z-index:1">
         <div class="mono" style="color:var(--muted);font-size:14px">gratidOM · Template de CRM</div>
-        <div class="price">R$ 297<small>pagamento único · à vista ou parcelado no cartão</small></div>
+        <div class="old">De R$ 697</div>
+        <div class="price">R$ 497<small>pagamento único · à vista ou parcelado no cartão</small></div>
+        <span class="save">Economize R$ 200 · oferta de lançamento</span>
         <ul>
           <li>Código-fonte completo (Next.js 16 + Supabase)</li>
+          <li>Múltiplos pipelines, automações, UTMs e inbox multicanal</li>
           <li>7 vídeos de instalação passo a passo</li>
           <li>Documentação completa para leigos</li>
           <li>Deploy pronto (Docker + EasyPanel)</li>
@@ -302,8 +328,9 @@
     <div class="eyebrow">Dúvidas</div>
     <h2>Perguntas frequentes</h2>
     <div class="faq">
-      <details><summary>Preciso saber programar?</summary><p>Não para colocar no ar. Os 7 vídeos e a documentação levam você do zero até o sistema rodando, passo a passo. Para customizações mais avançadas, um conhecimento básico ajuda, mas o template já vem pronto para o Claude Code te ajudar a evoluir conversando em português.</p></details>
+      <details><summary>Preciso saber programar?</summary><p>Não para colocar no ar. Os 7 vídeos e a documentação levam você do zero até o sistema rodando, passo a passo. E se quiser mais funcionalidades, você descreve em português e o Claude Code constrói seguindo os padrões do template.</p></details>
       <details><summary>O que exatamente eu recebo?</summary><p>O código-fonte completo do CRM, o curso em vídeo de instalação (7 aulas), a documentação em 5 capítulos e o guia de publicação. Tudo entregue na hora, dentro da área de membros, logo após a compra.</p></details>
+      <details><summary>Quais funcionalidades já vêm prontas?</summary><p>Auth, multi-tenant, convites, dashboard e deploy formam a base. No CRM: múltiplos pipelines, contatos e empresas (com busca por CNPJ), formulários de captura, rastreamento de UTMs, inbox multicanal (WhatsApp e Instagram), automações, agentes de IA, relatórios, tarefas, produtos e gestão de equipe.</p></details>
       <details><summary>Preciso pagar mensalidade?</summary><p>Não. O pagamento é único. O código é seu para sempre. Você só paga a hospedagem (uma VPS) e o Supabase, que tem plano gratuito generoso para começar.</p></details>
       <details><summary>Posso usar em projetos de clientes?</summary><p>Sim. Você pode instalar, personalizar e publicar o CRM quantas vezes quiser, para o seu negócio ou para os seus clientes.</p></details>
       <details><summary>E se não for para mim?</summary><p>Você tem 7 dias de garantia incondicional. Se não gostar, é só pedir o reembolso dentro do prazo e devolvemos 100% do valor.</p></details>
@@ -313,7 +340,7 @@
 
 <footer>
   <div class="wrap">
-    <div class="brand" style="justify-content:center;margin-bottom:10px">Template de <span class="accent">CRM</span></div>
+    <div class="brand"><img src="flor.svg" alt="gratidOM" /> Template de <span class="accent">CRM</span></div>
     <p>gratidOM · Template de CRM — Next.js 16 + Supabase</p>
     <p style="margin-top:6px"><a href="https://pay.cakto.com.br/KSLx4sz" class="accent">Garantir meu acesso →</a></p>
   </div>
