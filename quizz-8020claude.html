@@ -46,7 +46,7 @@
   .step.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-  .logo{width:78px;height:auto;display:block;margin:0 auto 26px}
+  .logo{width:86px;height:auto;display:block;margin:0 auto 26px;filter:brightness(0) invert(1) drop-shadow(0 4px 18px rgba(255,106,0,.25))}
   h1{font-size:clamp(26px,6vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.15;text-align:center}
   h2{font-size:clamp(22px,5.2vw,28px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-align:center}
   .sub{color:var(--muted);text-align:center;margin-top:16px;font-size:clamp(15px,3.6vw,17px);max-width:46ch;margin-left:auto;margin-right:auto}
@@ -78,7 +78,10 @@
   .cbars{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 4px}
   .cbar{border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:20px 16px 16px;text-align:center}
   .cbar .tube{height:150px;width:56px;margin:0 auto;border-radius:12px;background:rgba(255,255,255,.05);display:flex;align-items:flex-end;overflow:hidden}
-  .cbar .fill{width:100%;border-radius:12px 12px 0 0}
+  .cbar .fill{width:100%;border-radius:12px 12px 0 0;height:0;transition:height 1s cubic-bezier(.22,1,.36,1)}
+  .cbar .tube{position:relative}
+  .err{color:#f87171;font-size:13px;margin-top:8px}
+  @keyframes pop{0%{transform:scale(.9);opacity:0}100%{transform:scale(1);opacity:1}}
   .cbar .pct{font-weight:800;font-size:20px;margin-bottom:8px;display:block}
   .cbar .lbl{color:var(--muted);font-size:13.5px;margin-top:12px;line-height:1.35}
 
@@ -138,7 +141,8 @@
 
 <script>
 /* ====== CONFIG EDITÁVEL ====== */
-const CHECKOUT_URL = "#TROCAR_PELO_LINK_DE_CHECKOUT"; // <-- Raquel: cole aqui o link do checkout
+const CHECKOUT_URL = "#TROCAR_PELO_LINK_DE_CHECKOUT"; // <-- Raquel: cole aqui o link do checkout (Cakto)
+const LEAD_WEBHOOK = "#TROCAR_PELO_WEBHOOK";          // <-- opcional: URL de webhook (ex.: n8n) que recebe o lead {nome, whatsapp, utms, respostas}
 const PRECO_CHEIO  = "R$497";
 const PRECO_AGORA  = "R$97";
 const PARCELA      = "12x de R$9,70";
@@ -146,6 +150,15 @@ const PARCELA      = "12x de R$9,70";
 /* ====== ESTADO ====== */
 const respostas = {};
 let nome = "";
+const lead = {};
+
+/* UTMs ocultas: capturadas da URL na entrada e carregadas até o checkout */
+const utms = {};
+try{
+  const q = new URLSearchParams(location.search);
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','fbclid','gclid','ref','src']
+    .forEach(k => { const v = q.get(k); if(v) utms[k] = v; });
+}catch(e){}
 
 /* helper: primeiro nome capitalizado */
 function ehNome(){ return nome ? nome.trim().split(/\s+/)[0].replace(/^./,c=>c.toUpperCase()) : "você"; }
@@ -313,15 +326,20 @@ function render(){
   else if(s.tipo==='contraste'){
     html = `<h2>${titulo}</h2>
       <div class="cbars">
-        <div class="cbar"><span class="pct" style="color:#f59e0b">30%</span>
-          <div class="tube"><div class="fill" style="height:30%;background:#f59e0b"></div></div>
+        <div class="cbar"><span class="pct" data-t="30" style="color:#f59e0b">0%</span>
+          <div class="tube"><div class="fill" data-h="30" style="background:#f59e0b"></div></div>
           <div class="lbl">Tentando IA no improviso</div></div>
-        <div class="cbar"><span class="pct green">90%</span>
-          <div class="tube"><div class="fill" style="height:90%;background:var(--green)"></div></div>
+        <div class="cbar"><span class="pct green" data-t="90">0%</span>
+          <div class="tube"><div class="fill" data-h="90" style="background:var(--green)"></div></div>
           <div class="lbl">Com o método 80/20 Claude</div></div>
       </div>
       <p class="sub">${ehNome()}, o problema nunca foi capacidade. Foi <b>gastar energia no lugar errado</b>.</p>
-      <button class="cta" onclick="next()">${s.btn}</button>`;
+      <div class="field">
+        <label>Pra liberar o método, deixa seu melhor WhatsApp (com DDD)</label>
+        <input id="waInput" type="tel" inputmode="numeric" placeholder="(34) 99999-9999" oninput="maskWa(this)" onkeydown="if(event.key==='Enter')capturaLead()">
+        <div class="err" id="waErr" style="display:none">Digite um WhatsApp válido com DDD.</div>
+      </div>
+      <button class="cta" onclick="capturaLead()">${s.btn}</button>`;
   }
   else if(s.tipo==='oferta'){
     html = renderOferta();
@@ -329,6 +347,71 @@ function render(){
   stage.innerHTML = `<div class="step active">${html}</div>`;
   const inp = document.getElementById('nomeInput');
   if(inp){ inp.value = nome; inp.focus(); }
+  const wa = document.getElementById('waInput');
+  if(wa && lead.whatsapp){ wa.value = lead.whatsapp; }
+  if(s.tipo==='contraste') animateBars();
+}
+
+/* anima as barras e os números do bloco contraste */
+function animateBars(){
+  document.querySelectorAll('.cbar .fill').forEach(el=>{
+    const h = el.getAttribute('data-h');
+    requestAnimationFrame(()=> setTimeout(()=>{ el.style.height = h + '%'; }, 60));
+  });
+  document.querySelectorAll('.cbar .pct').forEach(el=>{
+    const t = +el.getAttribute('data-t'); let c = 0;
+    const inc = Math.max(1, Math.round(t/45));
+    const iv = setInterval(()=>{ c += inc; if(c>=t){ c=t; clearInterval(iv); } el.textContent = c + '%'; }, 22);
+  });
+}
+
+/* máscara simples de telefone BR */
+function maskWa(el){
+  let d = el.value.replace(/\D/g,'').slice(0,11);
+  if(d.length>6) el.value = `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+  else if(d.length>2) el.value = `(${d.slice(0,2)}) ${d.slice(2)}`;
+  else el.value = d;
+  const err = document.getElementById('waErr'); if(err) err.style.display='none';
+}
+
+/* captura o lead (whatsapp + utms ocultas + respostas), envia e segue pro próximo bloco */
+function capturaLead(){
+  const inp = document.getElementById('waInput');
+  const digits = (inp && inp.value || '').replace(/\D/g,'');
+  if(digits.length < 10){
+    const err = document.getElementById('waErr'); if(err) err.style.display='block';
+    if(inp) inp.focus();
+    return;
+  }
+  lead.whatsapp = digits;
+  lead.nome = nome;
+  lead.respostas = {...respostas};
+  enviarLead();
+  next();
+}
+
+/* envia o lead pro webhook (opcional, best-effort, não bloqueia a navegação) */
+function enviarLead(){
+  try{
+    if(LEAD_WEBHOOK && !LEAD_WEBHOOK.startsWith('#')){
+      fetch(LEAD_WEBHOOK, {
+        method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true,
+        body: JSON.stringify({ origem:'quiz-8020claude', nome, whatsapp:lead.whatsapp, utms, respostas, ts:new Date().toISOString() })
+      }).catch(()=>{});
+    }
+  }catch(e){}
+}
+
+/* monta o link de checkout carregando utms + whatsapp + nome */
+function checkoutUrl(){
+  const base = CHECKOUT_URL;
+  if(!base || base.startsWith('#')) return base || '#';
+  const q = new URLSearchParams();
+  Object.entries(utms).forEach(([k,v])=> q.set(k,v));
+  if(lead.whatsapp) q.set('phone', lead.whatsapp);
+  if(nome) q.set('name', nome);
+  const qs = q.toString();
+  return qs ? base + (base.includes('?')?'&':'?') + qs : base;
 }
 
 function renderOferta(){
@@ -362,7 +445,7 @@ function renderOferta(){
     <div><b>Garantia de 7 dias.</b> Entrou, não era pra você? Devolvo cada centavo. O risco é meu.</div>
   </div>
 
-  <a class="cta" href="${CHECKOUT_URL}" target="_blank" rel="noopener" style="margin-top:22px">Quero o 80/20 Claude por ${PRECO_AGORA} 🚀</a>
+  <a class="cta" href="${checkoutUrl()}" target="_blank" rel="noopener" style="margin-top:22px">Quero o 80/20 Claude por ${PRECO_AGORA} 🚀</a>
 
   <div class="faq">
     <details><summary>Preciso saber programar?</summary><p>Não. O 80/20 Claude é feito pra quem quer resultado, não pra quem quer virar técnico. Se você sabe conversar, sabe usar.</p></details>
@@ -371,7 +454,7 @@ function renderOferta(){
     <details><summary>Como recebo o acesso?</summary><p>Logo após a compra, direto na plataforma. Formas de pagamento no cartão, Pix ou parcelado.</p></details>
   </div>
 
-  <a class="cta dark" href="${CHECKOUT_URL}" target="_blank" rel="noopener">Garantir minha vaga agora</a>
+  <a class="cta dark" href="${checkoutUrl()}" target="_blank" rel="noopener">Garantir minha vaga agora</a>
   `;
 }
 
