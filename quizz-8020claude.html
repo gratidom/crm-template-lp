@@ -46,7 +46,7 @@
   .step.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-  .logo{width:132px;height:auto;display:block;margin:0 auto 26px}
+  .logo{width:78px;height:auto;display:block;margin:0 auto 26px}
   h1{font-size:clamp(26px,6vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.15;text-align:center}
   h2{font-size:clamp(22px,5.2vw,28px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-align:center}
   .sub{color:var(--muted);text-align:center;margin-top:16px;font-size:clamp(15px,3.6vw,17px);max-width:46ch;margin-left:auto;margin-right:auto}
@@ -139,9 +139,9 @@
 <script>
 /* ====== CONFIG EDITÁVEL ====== */
 const CHECKOUT_URL = "#TROCAR_PELO_LINK_DE_CHECKOUT"; // <-- Raquel: cole aqui o link do checkout
-const PRECO_CHEIO  = "R$997";
-const PRECO_AGORA  = "R$497";
-const PARCELA      = "12x de R$49,70";
+const PRECO_CHEIO  = "R$497";
+const PRECO_AGORA  = "R$97";
+const PARCELA      = "12x de R$9,70";
 
 /* ====== ESTADO ====== */
 const respostas = {};
@@ -287,7 +287,7 @@ function render(){
   window.scrollTo({top:0,behavior:'instant'});
 
   let html = '';
-  const logo = s.logo ? `<img class="logo" src="logo-rm-branca.png" alt="Raquel Mateus">` : '';
+  const logo = s.logo ? `<img class="logo" src="logo-rm-simbolo.png" alt="Raquel Mateus">` : '';
   const titulo = s.dyn ? s.dyn(respostas) : (s.h||'');
 
   if(s.tipo==='intro'){
