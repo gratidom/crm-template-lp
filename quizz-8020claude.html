@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>80/20 Claude — Quiz | Raquel Mateus</title>
+<meta name="description" content="Descubra em 2 minutos como usar o Claude pra fazer o trabalho pesado do seu negócio, sem virar programador e sem perder semanas." />
+<link rel="icon" href="logo-rm-simbolo.png" type="image/png" />
+<meta property="og:title" content="80/20 Claude — o atalho pra usar IA no seu negócio" />
+<meta property="og:description" content="Aprenda só os 20% do Claude que geram 80% do resultado. Sem enrolação." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a; --panel:rgba(255,255,255,.03); --border:rgba(255,255,255,.10);
+    --accent:#FF6A00; --accent-soft:#ff8a3d; --white:#fff; --muted:rgba(255,255,255,.62);
+    --green:#22c55e; --sans:'Plus Jakarta Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden}
+  body{background:var(--bg);color:var(--white);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+  a{color:inherit;text-decoration:none}
+  .accent{color:var(--accent)}
+  .green{color:var(--green)}
+  .mono{font-family:var(--mono)}
+
+  /* fundo */
+  .glow{position:fixed;top:-360px;left:50%;transform:translateX(-50%);width:1000px;height:680px;background:radial-gradient(circle,rgba(255,106,0,.16)0%,transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
+  .dotgrid{position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.05)1.3px,transparent 1.3px);background-size:42px 42px;-webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 20%,#000 30%,transparent 78%);mask-image:radial-gradient(ellipse 70% 55% at 50% 20%,#000 30%,transparent 78%);pointer-events:none;z-index:0}
+
+  /* topbar */
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(10,10,10,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .topbar .row{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:14px 20px}
+  .back{cursor:pointer;color:var(--muted);font-size:20px;line-height:1;width:24px;flex:0 0 auto;transition:color .15s;user-select:none}
+  .back:hover{color:var(--white)}
+  .back.hidden{visibility:hidden}
+  .bar{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent-soft));transition:width .35s ease}
+
+  /* palco */
+  main{position:relative;z-index:1}
+  .stage{max-width:640px;margin:0 auto;padding:40px 20px 80px;min-height:calc(100vh - 57px);display:flex;flex-direction:column;justify-content:center}
+  .step{display:none;animation:fade .35s ease}
+  .step.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .logo{width:132px;height:auto;display:block;margin:0 auto 26px}
+  h1{font-size:clamp(26px,6vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.15;text-align:center}
+  h2{font-size:clamp(22px,5.2vw,28px);font-weight:800;letter-spacing:-.02em;line-height:1.2;text-align:center}
+  .sub{color:var(--muted);text-align:center;margin-top:16px;font-size:clamp(15px,3.6vw,17px);max-width:46ch;margin-left:auto;margin-right:auto}
+  .sub b{color:var(--white);font-weight:600}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);text-align:center;display:block;margin-bottom:14px}
+
+  /* opções */
+  .opts{display:flex;flex-direction:column;gap:12px;margin-top:30px}
+  .opts.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .opt{display:flex;align-items:center;gap:14px;text-align:left;width:100%;border:1px solid var(--border);border-radius:15px;background:var(--panel);padding:18px 18px;color:var(--white);font-size:16px;font-weight:500;font-family:inherit;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+  .opt:hover{transform:translateY(-2px);border-color:rgba(255,106,0,.55);background:rgba(255,106,0,.06)}
+  .opt .em{font-size:22px;flex:0 0 auto;line-height:1}
+  .opt .rd{width:22px;height:22px;border-radius:99px;border:2px solid var(--border);flex:0 0 auto}
+  .opt:hover .rd{border-color:var(--accent)}
+
+  /* botão principal */
+  .cta{display:block;width:100%;text-align:center;border:none;border-radius:15px;padding:19px 22px;font-family:inherit;font-size:17px;font-weight:700;color:#fff;background:linear-gradient(90deg,var(--accent),var(--accent-soft));cursor:pointer;margin-top:30px;box-shadow:0 14px 40px rgba(255,106,0,.28);transition:transform .12s,box-shadow .12s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(255,106,0,.42)}
+  .cta.dark{background:rgba(255,255,255,.05);border:1px solid var(--border);box-shadow:none;color:var(--white)}
+  .cta.dark:hover{border-color:var(--accent);background:rgba(255,106,0,.08)}
+
+  /* input nome */
+  .field{margin-top:26px}
+  .field label{display:block;color:var(--muted);font-size:14px;margin-bottom:8px}
+  .field input{width:100%;border:1px solid var(--border);background:rgba(255,255,255,.03);border-radius:14px;padding:17px 18px;color:var(--white);font-size:17px;font-family:inherit;outline:none;transition:border-color .15s}
+  .field input:focus{border-color:var(--accent)}
+
+  /* barras contraste */
+  .cbars{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 4px}
+  .cbar{border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:20px 16px 16px;text-align:center}
+  .cbar .tube{height:150px;width:56px;margin:0 auto;border-radius:12px;background:rgba(255,255,255,.05);display:flex;align-items:flex-end;overflow:hidden}
+  .cbar .fill{width:100%;border-radius:12px 12px 0 0}
+  .cbar .pct{font-weight:800;font-size:20px;margin-bottom:8px;display:block}
+  .cbar .lbl{color:var(--muted);font-size:13.5px;margin-top:12px;line-height:1.35}
+
+  /* lista da oferta */
+  .stack{list-style:none;margin:22px 0 0;display:flex;flex-direction:column;gap:11px}
+  .stack li{display:flex;gap:11px;align-items:flex-start;font-size:15.5px;line-height:1.45}
+  .stack li .ck{color:var(--green);flex:0 0 auto;font-weight:800}
+  .stack li b{font-weight:700}
+
+  .price{border:1px solid rgba(255,106,0,.35);background:linear-gradient(180deg,rgba(255,106,0,.10),rgba(255,255,255,.02));border-radius:18px;padding:24px;text-align:center;margin-top:26px}
+  .price .old{color:var(--muted);text-decoration:line-through;font-size:16px}
+  .price .now{font-size:42px;font-weight:800;letter-spacing:-.02em;line-height:1;margin:6px 0}
+  .price .now small{font-size:20px;font-weight:600}
+  .price .inst{color:var(--accent-soft);font-weight:600;font-size:15px}
+  .price .warn{color:var(--muted);font-size:13px;margin-top:10px;font-family:var(--mono);letter-spacing:.5px}
+
+  .guarantee{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);border-radius:14px;background:var(--panel);padding:16px 18px;margin-top:18px;font-size:14.5px;color:var(--muted)}
+  .guarantee b{color:var(--white)}
+
+  /* prova / autoridade */
+  .proof{border:1px dashed rgba(255,106,0,.5);border-radius:16px;background:rgba(255,106,0,.05);padding:22px;margin-top:26px;text-align:center;color:var(--muted);font-size:14px}
+  .proof .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+  .authcard{border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:22px;margin-top:24px}
+  .authcard p{font-size:15.5px;color:var(--muted);margin-top:10px}
+  .authcard p b{color:var(--white)}
+
+  .faq{margin-top:26px;display:flex;flex-direction:column;gap:10px}
+  .faq details{border:1px solid var(--border);border-radius:13px;background:var(--panel);padding:0 18px}
+  .faq summary{cursor:pointer;padding:16px 0;font-weight:600;font-size:15.5px;list-style:none}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:'+';float:right;color:var(--accent);font-weight:700}
+  .faq details[open] summary::after{content:'–'}
+  .faq p{color:var(--muted);font-size:14.5px;padding:0 0 16px}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:26px 20px;position:relative;z-index:1;font-family:var(--mono);letter-spacing:.5px}
+  .hi{color:var(--accent);font-weight:700}
+
+  @media(max-width:520px){
+    .opts.grid{grid-template-columns:1fr}
+    .cbar .tube{height:120px;width:48px}
+  }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="dotgrid"></div>
+
+<div class="topbar">
+  <div class="row">
+    <div class="back hidden" id="back" onclick="prev()">←</div>
+    <div class="bar"><i id="progress"></i></div>
+  </div>
+</div>
+
+<main><div class="stage" id="stage"><!-- steps injetados via JS --></div></main>
+<footer>© 2026 Raquel Mateus · <span class="hi">80/20 Claude</span> · Gestão, processos e IA</footer>
+
+<script>
+/* ====== CONFIG EDITÁVEL ====== */
+const CHECKOUT_URL = "#TROCAR_PELO_LINK_DE_CHECKOUT"; // <-- Raquel: cole aqui o link do checkout
+const PRECO_CHEIO  = "R$997";
+const PRECO_AGORA  = "R$497";
+const PARCELA      = "12x de R$49,70";
+
+/* ====== ESTADO ====== */
+const respostas = {};
+let nome = "";
+
+/* helper: primeiro nome capitalizado */
+function ehNome(){ return nome ? nome.trim().split(/\s+/)[0].replace(/^./,c=>c.toUpperCase()) : "você"; }
+
+/* ====== DEFINIÇÃO DOS PASSOS ======
+   tipo: 'intro' | 'pergunta' | 'nome' | 'autoridade' | 'contraste' | 'oferta'
+*/
+const steps = [
+
+/* 1 - ABERTURA */
+{tipo:'intro', logo:true,
+ h:'Você está a um passo de fazer o <span class="accent">Claude</span> trabalhar pelo seu negócio, sem virar programador',
+ sub:'Eu rodo os meus negócios inteiros com o Claude. Aqui eu te mostro os <b>20% que geram 80% do resultado</b>, sem curso interminável e sem enrolação.',
+ btn:'Bora, quero ver 👇'},
+
+/* 2 - QUALIFICAÇÃO: relação com IA hoje */
+{tipo:'pergunta', k:'ia_hoje',
+ h:'Como você lida com IA hoje no seu negócio?',
+ sub:'Quero adaptar o que te mostrar ao seu momento.',
+ opts:[
+   {e:'🌱',t:'Nunca usei de verdade'},
+   {e:'🎲',t:'Uso o ChatGPT solto, de vez em quando'},
+   {e:'😮‍💨',t:'Uso, mas sinto que desperdiço o potencial'},
+   {e:'🚀',t:'Já uso bastante e quero estruturar'}
+ ]},
+
+/* 3 - DOR: tempo perdido */
+{tipo:'pergunta', k:'tempo',
+ h:'Quanto tempo por semana você (ou seu time) gasta em tarefas repetitivas?',
+ sub:'Coisas que uma IA bem usada poderia adiantar.',
+ opts:[
+   {e:'⏱️',t:'Menos de 5 horas'},
+   {e:'⏳',t:'Entre 5 e 15 horas'},
+   {e:'🥵',t:'Mais de 15 horas'},
+   {e:'🤷',t:'Nem consigo medir, é muito'}
+ ]},
+
+/* 4 - DOR: o que trava */
+{tipo:'pergunta', k:'trava',
+ h:'O que mais te trava na hora de usar IA?',
+ opts:[
+   {e:'❓',t:'Não sei exatamente o que pedir'},
+   {e:'🫥',t:'As respostas saem genéricas demais'},
+   {e:'🧭',t:'Me perco no meio de tantas ferramentas'},
+   {e:'🕒',t:'Falta tempo pra sentar e aprender'}
+ ]},
+
+/* 5 - HISTÓRICO */
+{tipo:'pergunta', k:'tentou',
+ h:'Você já tentou aprender IA antes?',
+ opts:[
+   {e:'🚫',t:'Nunca cheguei a começar'},
+   {e:'📉',t:'Comecei um curso e parei no meio'},
+   {e:'📺',t:'Só vídeos soltos no YouTube'},
+   {e:'📚',t:'Sim, mas não apliquei no negócio'}
+ ]},
+
+/* 6 - DOR EMOCIONAL (a mais importante) */
+{tipo:'pergunta', k:'frase',
+ h:'Qual dessas frases mais parece com você?',
+ sub:'Seja sincero, aqui é só entre nós.',
+ opts:[
+   {e:'😰',t:'Sinto que a IA já passou por mim'},
+   {e:'😩',t:'Perco tempo tentando e não sai o que preciso'},
+   {e:'🫤',t:'Tenho medo de investir e não usar'},
+   {e:'🧩',t:'Sei que ia me ajudar, só não sei por onde começar'}
+ ]},
+
+/* 7 - AUTORIDADE (meus próprios resultados) */
+{tipo:'autoridade',
+ h:'Não é teoria. É o que eu faço todo dia.',
+ corpo:`<div class="authcard">
+   <p>Eu, <b>Raquel Mateus</b>, construí e opero negócios inteiros com o Claude: CRM, plataformas, agentes que respondem cliente, conteúdo, análise de dados e a rotina administrativa.</p>
+   <p>O segredo nunca foi "saber tudo de IA". Foi usar <b>só o que dá resultado</b> e ignorar o resto. É exatamente esse recorte que eu organizei no <b class="accent">80/20 Claude</b>.</p>
+ </div>
+ <div class="proof">
+   <span class="tag">Espaço reservado</span>
+   Aqui entra um print/número real seu (ex.: tela de sistema rodando com Claude, ou horas economizadas). Me manda que eu encaixo.
+ </div>`,
+ btn:'Faz sentido, continua 👇'},
+
+/* 8 - NOME */
+{tipo:'nome',
+ h:'Antes de te mostrar a solução, como prefere ser chamado?',
+ sub:'Vou personalizar o resto pra você.',
+ btn:'Continuar'},
+
+/* 9 - MICRO-SIM personalizado */
+{tipo:'pergunta', k:'bora', dyn:s=>`${ehNome()}, bora aprender só o que dá resultado e pular o resto?`,
+ opts:[
+   {e:'🙌',t:'Com certeza, é o que eu preciso'},
+   {e:'✅',t:'Sim, quero um caminho claro'}
+ ], grid:true},
+
+/* 10 - OBJEÇÃO mapeada */
+{tipo:'pergunta', k:'objecao', dyn:s=>`${ehNome()}, o que mais te impede de usar IA hoje?`,
+ opts:[
+   {e:'🕒',t:'Falta de tempo'},
+   {e:'🧠',t:'Não sei o que pedir pra ela'},
+   {e:'🤨',t:'Ceticismo, será que funciona mesmo?'},
+   {e:'😵‍💫',t:'Medo de complicar demais'}
+ ]},
+
+/* 11 - MICRO-SIM conceitual */
+{tipo:'pergunta', k:'concorda', dyn:s=>`${ehNome()}, concorda que o problema nunca foi a ferramenta, e sim não ter um caminho claro?`,
+ opts:[
+   {e:'👍',t:'Concordo totalmente'},
+   {e:'💯',t:'É exatamente isso'}
+ ], grid:true},
+
+/* 12 - PROJEÇÃO de desejo */
+{tipo:'pergunta', k:'impacto', dyn:s=>`Qual seria o impacto de recuperar <span class="accent">horas toda semana</span> com a IA fazendo o trabalho pesado?`,
+ opts:[
+   {e:'🙂',t:'Ajudaria um pouco'},
+   {e:'😌',t:'Ajudaria bastante'},
+   {e:'🤩',t:'Mudaria minha rotina'},
+   {e:'🔥',t:'Seria transformador'}
+ ]},
+
+/* 13 - CONTRASTE */
+{tipo:'contraste',
+ h:'A diferença não é esforço. É método.',
+ btn:'Quero o método 👇'},
+
+/* 14 - OFERTA */
+{tipo:'oferta'}
+];
+
+/* ====== RENDER ====== */
+let i = 0;
+const stage = document.getElementById('stage');
+const bar = document.getElementById('progress');
+const back = document.getElementById('back');
+
+function render(){
+  const s = steps[i];
+  bar.style.width = ((i)/(steps.length-1)*100).toFixed(1) + '%';
+  back.classList.toggle('hidden', i===0);
+  window.scrollTo({top:0,behavior:'instant'});
+
+  let html = '';
+  const logo = s.logo ? `<img class="logo" src="logo-rm-branca.png" alt="Raquel Mateus">` : '';
+  const titulo = s.dyn ? s.dyn(respostas) : (s.h||'');
+
+  if(s.tipo==='intro'){
+    html = `${logo}<h1>${titulo}</h1>${s.sub?`<p class="sub">${s.sub}</p>`:''}
+      <button class="cta" onclick="next()">${s.btn}</button>`;
+  }
+  else if(s.tipo==='pergunta'){
+    const cls = s.grid ? 'opts grid' : 'opts';
+    const opts = s.opts.map((o,idx)=>`<button class="opt" onclick="pick('${s.k}',${idx})">
+        <span class="em">${o.e}</span><span>${o.t}</span><span class="rd" style="margin-left:auto"></span></button>`).join('');
+    html = `<h2>${titulo}</h2>${s.sub?`<p class="sub">${s.sub}</p>`:''}<div class="${cls}">${opts}</div>`;
+  }
+  else if(s.tipo==='autoridade'){
+    html = `<h2>${titulo}</h2>${s.corpo}<button class="cta" onclick="next()">${s.btn}</button>`;
+  }
+  else if(s.tipo==='nome'){
+    html = `<h2>${titulo}</h2>${s.sub?`<p class="sub">${s.sub}</p>`:''}
+      <div class="field"><label>Como prefere ser chamado?</label>
+      <input id="nomeInput" type="text" placeholder="Ex.: Raquel, Rafa, Dra. Ana..." autocomplete="given-name"
+      onkeydown="if(event.key==='Enter')salvarNome()"></div>
+      <button class="cta" onclick="salvarNome()">${s.btn}</button>`;
+  }
+  else if(s.tipo==='contraste'){
+    html = `<h2>${titulo}</h2>
+      <div class="cbars">
+        <div class="cbar"><span class="pct" style="color:#f59e0b">30%</span>
+          <div class="tube"><div class="fill" style="height:30%;background:#f59e0b"></div></div>
+          <div class="lbl">Tentando IA no improviso</div></div>
+        <div class="cbar"><span class="pct green">90%</span>
+          <div class="tube"><div class="fill" style="height:90%;background:var(--green)"></div></div>
+          <div class="lbl">Com o método 80/20 Claude</div></div>
+      </div>
+      <p class="sub">${ehNome()}, o problema nunca foi capacidade. Foi <b>gastar energia no lugar errado</b>.</p>
+      <button class="cta" onclick="next()">${s.btn}</button>`;
+  }
+  else if(s.tipo==='oferta'){
+    html = renderOferta();
+  }
+  stage.innerHTML = `<div class="step active">${html}</div>`;
+  const inp = document.getElementById('nomeInput');
+  if(inp){ inp.value = nome; inp.focus(); }
+}
+
+function renderOferta(){
+  return `
+  <span class="kicker">Sua recomendação</span>
+  <h2>${ehNome()}, é isso que o <span class="accent">80/20 Claude</span> te entrega</h2>
+  <p class="sub">O atalho pra usar o Claude no seu negócio já esta semana, sem virar técnico e sem perder tempo com o que não importa.</p>
+
+  <ul class="stack">
+    <li><span class="ck">✓</span><span><b>O mapa 80/20:</b> só os usos do Claude que movem o ponteiro de um negócio.</span></li>
+    <li><span class="ck">✓</span><span><b>Aulas curtas e diretas ao ponto</b>, feitas pra empresário ocupado (nada de teoria).</span></li>
+    <li><span class="ck">✓</span><span><b>Prompts e modelos prontos</b> pra copiar, colar e adaptar ao seu negócio.</span></li>
+    <li><span class="ck">✓</span><span><b>Aplicações reais:</b> conteúdo, atendimento, análise, organização e rotina.</span></li>
+    <li><span class="ck">✓</span><span><b>Passo a passo</b> pra sair do zero e já usar no mesmo dia.</span></li>
+  </ul>
+
+  <div class="proof">
+    <span class="tag">Espaço reservado</span>
+    Aqui entra seu print/resultado real (bastidor de você usando Claude). Me manda que eu encaixo antes de divulgar.
+  </div>
+
+  <div class="price">
+    <div class="old">de ${PRECO_CHEIO}</div>
+    <div class="now">${PRECO_AGORA} <small>à vista</small></div>
+    <div class="inst">ou ${PARCELA}</div>
+    <div class="warn">▸ condição de lançamento</div>
+  </div>
+
+  <div class="guarantee">
+    <span class="green" style="font-size:20px">🛡️</span>
+    <div><b>Garantia de 7 dias.</b> Entrou, não era pra você? Devolvo cada centavo. O risco é meu.</div>
+  </div>
+
+  <a class="cta" href="${CHECKOUT_URL}" target="_blank" rel="noopener" style="margin-top:22px">Quero o 80/20 Claude por ${PRECO_AGORA} 🚀</a>
+
+  <div class="faq">
+    <details><summary>Preciso saber programar?</summary><p>Não. O 80/20 Claude é feito pra quem quer resultado, não pra quem quer virar técnico. Se você sabe conversar, sabe usar.</p></details>
+    <details><summary>Não tenho tempo. Vou dar conta?</summary><p>As aulas são curtas e práticas. A ideia é justamente te devolver tempo, não te tomar mais.</p></details>
+    <details><summary>Já tentei IA e não funcionou pra mim.</summary><p>O que costuma faltar não é ferramenta, é caminho. Aqui você recebe o recorte exato do que dá resultado.</p></details>
+    <details><summary>Como recebo o acesso?</summary><p>Logo após a compra, direto na plataforma. Formas de pagamento no cartão, Pix ou parcelado.</p></details>
+  </div>
+
+  <a class="cta dark" href="${CHECKOUT_URL}" target="_blank" rel="noopener">Garantir minha vaga agora</a>
+  `;
+}
+
+/* ====== NAVEGAÇÃO ====== */
+function next(){ if(i<steps.length-1){ i++; render(); } }
+function prev(){ if(i>0){ i--; render(); } }
+function pick(k,idx){ respostas[k]=idx; next(); }
+function salvarNome(){
+  const inp = document.getElementById('nomeInput');
+  if(inp && inp.value.trim().length){ nome = inp.value.trim(); }
+  next();
+}
+
+render();
+</script>
+</body>
+</html>
