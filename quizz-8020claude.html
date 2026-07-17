@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Google Tag Manager (carrega Meta Pixel 508480498054006 + GA4 G-0RX7GLGL0W já configurados no container) -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5RJ7DJB');</script>
+<!-- End Google Tag Manager -->
 <title>80/20 Claude — Quiz | Raquel Mateus</title>
 <meta name="description" content="Descubra em 2 minutos como usar o Claude pra fazer o trabalho pesado do seu negócio, sem virar programador e sem perder semanas." />
 <link rel="icon" href="logo-rm-simbolo.png" type="image/png" />
@@ -131,6 +134,9 @@
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5RJ7DJB" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div class="glow"></div>
 <div class="dotgrid"></div>
 
@@ -147,7 +153,7 @@
 <script>
 /* ====== CONFIG EDITÁVEL ====== */
 const CHECKOUT_URL = "https://pay.cakto.com.br/sr5vmvv"; // checkout Cakto do 80/20 Claude
-const LEAD_WEBHOOK = "#TROCAR_PELO_WEBHOOK";          // <-- opcional: URL de webhook (ex.: n8n) que recebe o lead {nome, whatsapp, utms, respostas}
+const LEAD_ENDPOINT = "https://360.raquelmateus.com.br/api/v1/forms/quiz-8020claude/submit"; // capta o lead direto no CRM 360 (form slug quiz-8020claude)
 const PRECO_CHEIO  = "R$497";
 const PRECO_AGORA  = "R$97";
 const PARCELA      = "12x de R$9,70";
@@ -392,19 +398,36 @@ function capturaLead(){
   lead.whatsapp = digits;
   lead.nome = nome;
   lead.respostas = {...respostas};
+  try{ (window.dataLayer=window.dataLayer||[]).push({event:'lead_capturado', origem:'quiz-8020claude', ...utms}); }catch(e){}
   enviarLead();
   next();
 }
 
-/* envia o lead pro webhook (opcional, best-effort, não bloqueia a navegação) */
+/* dispara evento de checkout pro GTM antes de abrir a Cakto */
+function trackCheckout(){
+  try{ (window.dataLayer=window.dataLayer||[]).push({event:'checkout_iniciado', valor:97, produto:'80/20 Claude', ...utms}); }catch(e){}
+}
+
+/* envia o lead direto pro CRM 360 (endpoint público de captação, CORS liberado).
+   best-effort: não bloqueia a navegação nem quebra o quiz se falhar. */
 function enviarLead(){
   try{
-    if(LEAD_WEBHOOK && !LEAD_WEBHOOK.startsWith('#')){
-      fetch(LEAD_WEBHOOK, {
-        method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true,
-        body: JSON.stringify({ origem:'quiz-8020claude', nome, whatsapp:lead.whatsapp, utms, respostas, ts:new Date().toISOString() })
-      }).catch(()=>{});
-    }
+    if(!LEAD_ENDPOINT || LEAD_ENDPOINT.startsWith('#')) return;
+    const nomeLead = (nome && nome.trim().length >= 2) ? nome.trim() : 'Lead 80/20 Claude';
+    fetch(LEAD_ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true,
+      body: JSON.stringify({
+        name: nomeLead,
+        whatsapp: lead.whatsapp,
+        consent: true,
+        utm: {
+          source: utms.utm_source, medium: utms.utm_medium, campaign: utms.utm_campaign,
+          content: utms.utm_content, term: utms.utm_term
+        },
+        gclid: utms.gclid, fbclid: utms.fbclid,
+        pageUrl: location.href, referrer: document.referrer
+      })
+    }).catch(()=>{});
   }catch(e){}
 }
 
@@ -452,7 +475,7 @@ function renderOferta(){
     <div><b>Garantia de 7 dias.</b> Entrou, não era pra você? Devolvo cada centavo. O risco é meu.</div>
   </div>
 
-  <a class="cta" href="${checkoutUrl()}" target="_blank" rel="noopener" style="margin-top:22px">Quero o 80/20 Claude por ${PRECO_AGORA} 🚀</a>
+  <a class="cta" href="${checkoutUrl()}" onclick="trackCheckout()" target="_blank" rel="noopener" style="margin-top:22px">Quero o 80/20 Claude por ${PRECO_AGORA} 🚀</a>
 
   <div class="faq">
     <details><summary>Preciso saber programar?</summary><p>Não. O 80/20 Claude é feito pra quem quer resultado, não pra quem quer virar técnico. Se você sabe conversar, sabe usar.</p></details>
@@ -461,7 +484,7 @@ function renderOferta(){
     <details><summary>Como recebo o acesso?</summary><p>Logo após a compra, direto na plataforma. Formas de pagamento no cartão, Pix ou parcelado.</p></details>
   </div>
 
-  <a class="cta dark" href="${checkoutUrl()}" target="_blank" rel="noopener">Garantir minha vaga agora</a>
+  <a class="cta dark" href="${checkoutUrl()}" onclick="trackCheckout()" target="_blank" rel="noopener">Garantir minha vaga agora</a>
   `;
 }
 
