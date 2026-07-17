@@ -107,6 +107,11 @@
   .authcard{border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:22px;margin-top:24px}
   .authcard p{font-size:15.5px;color:var(--muted);margin-top:10px}
   .authcard p b{color:var(--white)}
+  .depo{margin-top:24px;border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:14px;animation:pop .5s ease}
+  .depo img{width:100%;max-width:420px;height:auto;border-radius:10px;display:block;margin:0 auto;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .depo figcaption{color:var(--muted);font-size:12.5px;margin-top:11px;text-align:center;font-family:var(--mono);letter-spacing:.3px}
+  .depo .who{color:var(--accent-soft);font-weight:600}
+  .prooftitle{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-top:26px}
 
   .faq{margin-top:26px;display:flex;flex-direction:column;gap:10px}
   .faq details{border:1px solid var(--border);border-radius:13px;background:var(--panel);padding:0 18px}
@@ -234,10 +239,11 @@ const steps = [
    <p>Eu, <b>Raquel Mateus</b>, construí e opero negócios inteiros com o Claude: CRM, plataformas, agentes que respondem cliente, conteúdo, análise de dados e a rotina administrativa.</p>
    <p>O segredo nunca foi "saber tudo de IA". Foi usar <b>só o que dá resultado</b> e ignorar o resto. É exatamente esse recorte que eu organizei no <b class="accent">80/20 Claude</b>.</p>
  </div>
- <div class="proof">
-   <span class="tag">Espaço reservado</span>
-   Aqui entra um print/número real seu (ex.: tela de sistema rodando com Claude, ou horas economizadas). Me manda que eu encaixo.
- </div>`,
+ <p class="prooftitle">O que dizem sobre as aulas</p>
+ <figure class="depo">
+   <img src="depoimento-thamila.png" alt="Mensagem de aluna elogiando as aulas de Claude: didáticas, simples e claras">
+   <figcaption><span class="who">Thâmila</span> · aluna, sobre as aulas de Claude</figcaption>
+ </figure>`,
  btn:'Faz sentido, continua 👇'},
 
 /* 8 - NOME */
@@ -428,10 +434,11 @@ function renderOferta(){
     <li><span class="ck">✓</span><span><b>Passo a passo</b> pra sair do zero e já usar no mesmo dia.</span></li>
   </ul>
 
-  <div class="proof">
-    <span class="tag">Espaço reservado</span>
-    Aqui entra seu print/resultado real (bastidor de você usando Claude). Me manda que eu encaixo antes de divulgar.
-  </div>
+  <p class="prooftitle">Aluna real, resultado real</p>
+  <figure class="depo">
+    <img src="depoimento-thamila.png" alt="Mensagem de aluna elogiando as aulas de Claude: didáticas, simples e claras">
+    <figcaption><span class="who">Thâmila</span> · "as aulas de Claude estão fantásticas"</figcaption>
+  </figure>
 
   <div class="price">
     <div class="old">de ${PRECO_CHEIO}</div>
