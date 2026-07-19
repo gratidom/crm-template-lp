@@ -3,9 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Google Tag Manager (carrega Meta Pixel 508480498054006 + GA4 G-0RX7GLGL0W já configurados no container) -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5RJ7DJB');</script>
-<!-- End Google Tag Manager -->
+<!-- Meta Pixel (Raquel Mateus 02) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','508480498054006');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=508480498054006&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
 <title>80/20 Claude — Quiz | Raquel Mateus</title>
 <meta name="description" content="Descubra em 2 minutos como usar o Claude pra fazer o trabalho pesado do seu negócio, sem virar programador e sem perder semanas." />
 <link rel="icon" href="logo-rm-simbolo.png" type="image/png" />
@@ -399,6 +408,7 @@ function capturaLead(){
   lead.nome = nome;
   lead.respostas = {...respostas};
   try{ (window.dataLayer=window.dataLayer||[]).push({event:'lead_capturado', origem:'quiz-8020claude', ...utms}); }catch(e){}
+  try{ if(window.fbq) fbq('track','Lead',{content_name:'80/20 Claude', content_category:'quiz'}); }catch(e){}
   enviarLead();
   next();
 }
@@ -406,6 +416,7 @@ function capturaLead(){
 /* dispara evento de checkout pro GTM antes de abrir a Cakto */
 function trackCheckout(){
   try{ (window.dataLayer=window.dataLayer||[]).push({event:'checkout_iniciado', valor:97, produto:'80/20 Claude', ...utms}); }catch(e){}
+  try{ if(window.fbq) fbq('track','InitiateCheckout',{value:97, currency:'BRL', content_name:'80/20 Claude'}); }catch(e){}
 }
 
 /* envia o lead direto pro CRM 360 (endpoint público de captação, CORS liberado).
