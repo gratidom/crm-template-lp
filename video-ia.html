@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Meta Pixel (Raquel Mateus 02) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','508480498054006');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=508480498054006&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+<title>Aquele vídeo não era eu, era IA | Raquel Mateus</title>
+<meta name="description" content="Gravei 17 segundos no celular e a IA fez o resto, com o meu rosto e a minha voz. Veja como, e o que a inteligência artificial já pode fazer pelo seu negócio." />
+<link rel="icon" href="logo-rm-simbolo.png" type="image/png" />
+<meta property="og:title" content="Aquele vídeo não era eu. Era IA." />
+<meta property="og:description" content="Veja como foi feito e descubra o que a IA já pode fazer pelo seu negócio." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="https://gratidom.github.io/crm-template-lp/video-ia-poster.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a; --panel:rgba(255,255,255,.03); --border:rgba(255,255,255,.10);
+    --accent:#FF6A00; --accent-soft:#ff8a3d; --white:#fff; --muted:rgba(255,255,255,.62);
+    --green:#22c55e; --sans:'Plus Jakarta Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden;scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--white);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .accent{color:var(--accent)}
+  .green{color:var(--green)}
+  .mono{font-family:var(--mono)}
+
+  .glow{position:fixed;top:-360px;left:50%;transform:translateX(-50%);width:1000px;height:680px;background:radial-gradient(circle,rgba(255,106,0,.16)0%,transparent 62%);filter:blur(30px);pointer-events:none;z-index:0}
+  .dotgrid{position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.05)1.3px,transparent 1.3px);background-size:42px 42px;-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 10%,#000 30%,transparent 80%);mask-image:radial-gradient(ellipse 80% 60% at 50% 10%,#000 30%,transparent 80%);pointer-events:none;z-index:0}
+
+  .topbar{position:sticky;top:0;z-index:10;background:rgba(10,10,10,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+  .topbar .row{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 20px}
+  .topbar img{width:32px;height:auto;filter:brightness(0) invert(1)}
+  .topbar .mini{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+
+  main{position:relative;z-index:1}
+  .wrap{max-width:680px;margin:0 auto;padding:0 20px}
+  section{padding:52px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  section:last-of-type{border-bottom:none}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:14px}
+  h1{font-size:clamp(30px,7.2vw,46px);font-weight:800;letter-spacing:-.025em;line-height:1.08}
+  h2{font-size:clamp(24px,5.6vw,32px);font-weight:800;letter-spacing:-.02em;line-height:1.16}
+  p.lead{color:var(--muted);font-size:clamp(16px,3.8vw,18.5px);margin-top:18px}
+  p.lead b{color:var(--white);font-weight:600}
+  p.body{color:var(--muted);font-size:16px;margin-top:16px}
+  p.body b{color:var(--white);font-weight:600}
+
+  /* hero */
+  .hero{padding-top:44px;text-align:center}
+  .hero h1{margin-top:2px}
+  .hero .lead{max-width:34ch;margin-left:auto;margin-right:auto}
+  .videoBox{margin:30px auto 0;max-width:340px;border:1px solid var(--border);border-radius:22px;overflow:hidden;background:#000;box-shadow:0 24px 70px rgba(255,106,0,.16),0 10px 40px rgba(0,0,0,.5)}
+  .videoBox video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#000}
+  .scrollcue{margin-top:26px;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+  .scrollcue span{display:block;font-size:20px;margin-top:6px;animation:bob 1.6s ease-in-out infinite;color:var(--accent)}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* passos do bastidor */
+  .steps{list-style:none;margin:24px 0 0;display:flex;flex-direction:column;gap:14px}
+  .steps li{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--border);border-radius:15px;background:var(--panel);padding:16px 18px}
+  .steps .n{flex:0 0 auto;width:30px;height:30px;border-radius:99px;background:linear-gradient(135deg,var(--accent),var(--accent-soft));color:#fff;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}
+  .steps .tx{font-size:15.5px;line-height:1.45}
+  .steps .tx b{font-weight:700}
+  .punch{margin-top:20px;font-size:17px;font-weight:600;line-height:1.4}
+
+  /* lista de possibilidades */
+  .stack{list-style:none;margin:22px 0 0;display:flex;flex-direction:column;gap:12px}
+  .stack li{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.45}
+  .stack li .ck{color:var(--accent);flex:0 0 auto;font-weight:800;font-size:18px;line-height:1.3}
+  .stack li b{font-weight:700}
+
+  .authcard{border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:22px;margin-top:22px}
+  .authcard p{font-size:16px;color:var(--muted);line-height:1.55}
+  .authcard p b{color:var(--white)}
+
+  /* dois caminhos */
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+  .path{border:1px solid var(--border);border-radius:16px;background:var(--panel);padding:20px 16px;text-align:center}
+  .path .em{font-size:26px}
+  .path .tt{font-weight:700;font-size:15.5px;margin-top:10px}
+  .path .ds{color:var(--muted);font-size:13.5px;margin-top:6px;line-height:1.4}
+
+  .cta{display:block;width:100%;text-align:center;border:none;border-radius:15px;padding:20px 22px;font-family:inherit;font-size:17.5px;font-weight:700;color:#fff;background:linear-gradient(90deg,var(--accent),var(--accent-soft));cursor:pointer;box-shadow:0 14px 40px rgba(255,106,0,.28);transition:transform .12s,box-shadow .12s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 18px 50px rgba(255,106,0,.42)}
+  .cta.big{margin-top:26px}
+  .undercta{text-align:center;color:var(--muted);font-size:13px;margin-top:14px;font-family:var(--mono);letter-spacing:.4px}
+
+  footer{text-align:center;color:var(--muted);font-size:12.5px;padding:30px 20px;position:relative;z-index:1;font-family:var(--mono);letter-spacing:.5px}
+  .hi{color:var(--accent);font-weight:700}
+
+  @media(max-width:460px){ .paths{grid-template-columns:1fr} .videoBox{max-width:300px} }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="dotgrid"></div>
+
+<div class="topbar">
+  <div class="row">
+    <img src="logo-rm-branca.png" alt="Raquel Mateus">
+    <span class="mini">Gestão, processos e IA</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="kicker">O que você acabou de ver</span>
+      <h1>Aquele vídeo <span class="accent">não era eu</span>. Era IA.</h1>
+      <p class="lead">Eu gravei <b>17 segundos</b> no celular. A inteligência artificial fez o resto, com o meu rosto e a minha voz. E isso é só a <b>ponta</b> do que ela já faz por um negócio.</p>
+      <div class="videoBox">
+        <video src="video-ia.mp4" poster="video-ia-poster.jpg" controls playsinline preload="metadata"></video>
+      </div>
+      <div class="scrollcue">Como eu fiz<span>↓</span></div>
+    </div>
+  </section>
+
+  <!-- 2. BASTIDOR -->
+  <section>
+    <div class="wrap">
+      <span class="kicker">O bastidor</span>
+      <h2>Como eu fiz, sem estúdio, sem editor, sem equipe</h2>
+      <ul class="steps">
+        <li><span class="n">1</span><span class="tx">Gravei um <b>take curto</b> falando, do jeito que você grava um story no celular.</span></li>
+        <li><span class="n">2</span><span class="tx">A IA <b>recriou o vídeo</b> mantendo o meu rosto, a minha voz e a minha fala, palavra por palavra.</span></li>
+        <li><span class="n">3</span><span class="tx">Em minutos saiu um vídeo que <b>quase ninguém consegue dizer</b> se é real ou não.</span></li>
+      </ul>
+      <p class="punch">Sem set de filmagem. Sem ilha de edição. Sem perder o dia. O que antes era trabalho de uma produtora, hoje cabe no meu celular e num punhado de comandos.</p>
+    </div>
+  </section>
+
+  <!-- 3. PONTA DO ICEBERG -->
+  <section>
+    <div class="wrap">
+      <span class="kicker">A ponta do iceberg</span>
+      <h2>Se ela faz isso com um vídeo, imagina com o resto</h2>
+      <p class="lead">Vídeo é só o que dá pra ver. O que muda mesmo um negócio acontece nos bastidores:</p>
+      <ul class="stack">
+        <li><span class="ck">▸</span><span><b>Atendimento</b> que responde seu cliente na hora, no seu tom, 24h por dia.</span></li>
+        <li><span class="ck">▸</span><span><b>Conteúdo</b> saindo toda semana sem você travar na frente da tela.</span></li>
+        <li><span class="ck">▸</span><span><b>Relatórios e análises</b> que se montam sozinhos, prontos pra decisão.</span></li>
+        <li><span class="ck">▸</span><span><b>Rotina administrativa</b> e processos rodando sem depender de você.</span></li>
+        <li><span class="ck">▸</span><span><b>Vendas organizadas</b>, com cada lead no lugar certo e nenhum caindo no esquecimento.</span></li>
+      </ul>
+      <p class="punch">Tudo isso com IA. E não é futuro. É <span class="accent">agora</span>.</p>
+    </div>
+  </section>
+
+  <!-- 4. A DOR REAL -->
+  <section>
+    <div class="wrap">
+      <span class="kicker">A real</span>
+      <h2>Então por que a maioria tenta IA e desiste?</h2>
+      <p class="body">Porque tenta no improviso. Abre o ChatGPT, faz uma pergunta solta, a resposta sai genérica, e conclui que <b>"não é pra mim"</b>.</p>
+      <p class="body">O problema nunca foi a ferramenta. Foi <b>não ter processo</b> e não ter um caminho claro.</p>
+      <p class="body">IA em cima de bagunça só acelera a bagunça. IA em cima de um negócio organizado vira uma <b>alavanca</b>. Por isso, aqui, a ordem é sempre a mesma: <span class="accent">gestão primeiro, IA depois</span>.</p>
+    </div>
+  </section>
+
+  <!-- 5. AUTORIDADE -->
+  <section>
+    <div class="wrap">
+      <span class="kicker">Quem tá falando</span>
+      <h2>Eu não ensino teoria. Eu opero.</h2>
+      <div class="authcard">
+        <p>Eu, <b>Raquel Mateus</b>, rodo os meus negócios inteiros com IA: CRM próprio, plataformas, agentes que atendem cliente, conteúdo, análise de dados e a rotina administrativa.</p>
+        <p style="margin-top:12px">O vídeo que você viu foi feito por mim, com a <b>mesma IA que eu uso todos os dias</b>. Não é demonstração de curso. É a minha operação, funcionando.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. + 7. PONTE + CTA -->
+  <section>
+    <div class="wrap">
+      <span class="kicker">O seu próximo passo</span>
+      <h2>Tem dois caminhos pra IA trabalhar por você</h2>
+      <p class="lead">Um é <b>aprender a fazer você mesma</b>. O outro é a <b>gente implementar pra você</b>. Qual é o teu? Descobre em 2 minutos.</p>
+      <div class="paths">
+        <div class="path"><div class="em">🎓</div><div class="tt">Fazer você mesma</div><div class="ds">O caminho pra colocar a mão e usar a IA no dia a dia.</div></div>
+        <div class="path"><div class="em">🚀</div><div class="tt">A gente implementa</div><div class="ds">IA instalada no seu negócio, sob medida, com a gente do lado.</div></div>
+      </div>
+      <a class="cta big" href="quizz-8020claude.html" onclick="try{if(window.fbq)fbq('track','Lead',{content_name:'video-ia',content_category:'quiz-entry'});}catch(e){}">Descobrir meu caminho (2 min) →</a>
+      <p class="undercta">Sem custo. No fim, você recebe o caminho certo pro seu momento.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Raquel Mateus · <span class="hi">Gestão, processos e IA</span></footer>
+
+</body>
+</html>

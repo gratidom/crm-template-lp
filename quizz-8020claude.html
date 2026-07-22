@@ -160,6 +160,7 @@ fbq('track','PageView');
 /* ====== CONFIG EDITÁVEL ====== */
 const CHECKOUT_URL = "https://pay.cakto.com.br/sr5vmvv"; // checkout Cakto do 80/20 Claude
 const LEAD_ENDPOINT = "https://360.raquelmateus.com.br/api/v1/forms/quiz-8020claude/submit"; // capta o lead direto no CRM 360 (form slug quiz-8020claude)
+const WHATSAPP_VENDAS = "5534993999333"; // WhatsApp do time p/ leads de IMPLEMENTAÇÃO (confirmar número comercial)
 const PRECO_CHEIO  = "R$497";
 const PRECO_AGORA  = "R$97";
 const PARCELA      = "12x de R$9,70";
@@ -296,6 +297,13 @@ const steps = [
    {e:'🔥',t:'Seria transformador'}
  ]},
 
+/* 12b - INTENÇÃO (bifurca: self-service x implementação) */
+{tipo:'pergunta', k:'intencao', dyn:s=>`${ehNome()}, como você prefere colocar a IA pra trabalhar?`,
+ opts:[
+   {e:'🎓',t:'Quero aprender e fazer eu mesma'},
+   {e:'🚀',t:'Quero que a Raquel e o time implementem pra mim'}
+ ]},
+
 /* 13 - CONTRASTE */
 {tipo:'contraste',
  h:'A diferença não é esforço. É método.',
@@ -360,7 +368,7 @@ function render(){
       <button class="cta" onclick="capturaLead()">${s.btn}</button>`;
   }
   else if(s.tipo==='oferta'){
-    html = renderOferta();
+    html = (respostas.intencao === 1) ? renderImplementacao() : renderOferta();
   }
   stage.innerHTML = `<div class="step active">${html}</div>`;
   const inp = document.getElementById('nomeInput');
@@ -422,12 +430,17 @@ function enviarLead(){
   try{
     if(!LEAD_ENDPOINT || LEAD_ENDPOINT.startsWith('#')) return;
     const nomeLead = (nome && nome.trim().length >= 2) ? nome.trim() : 'Lead 80/20 Claude';
+    const querImplementacao = (respostas.intencao === 1);
+    const intent = querImplementacao ? 'implementacao' : 'self_service';
     fetch(LEAD_ENDPOINT, {
       method:'POST', headers:{'Content-Type':'application/json'}, keepalive:true,
       body: JSON.stringify({
         name: nomeLead,
         whatsapp: lead.whatsapp,
         consent: true,
+        intent: intent,                                  // 'implementacao' | 'self_service'
+        tags: [ querImplementacao ? 'quer-implementacao' : 'self-service', 'quiz-8020claude' ],
+        respostas: {...respostas},                       // respostas do quiz p/ qualificação
         utm: {
           source: utms.utm_source, medium: utms.utm_medium, campaign: utms.utm_campaign,
           content: utms.utm_content, term: utms.utm_term
@@ -449,6 +462,36 @@ function checkoutUrl(){
   if(nome) q.set('name', nome);
   const qs = q.toString();
   return qs ? base + (base.includes('?')?'&':'?') + qs : base;
+}
+
+/* tela de IMPLEMENTAÇÃO (high ticket) — quando a pessoa escolhe "implementem pra mim" */
+function renderImplementacao(){
+  const msg = encodeURIComponent(`Oi Raquel! Fiz o quiz e quero saber sobre a implementação de IA no meu negócio.${nome ? ' Meu nome é '+nome+'.' : ''}`);
+  const wa = `https://wa.me/${WHATSAPP_VENDAS}?text=${msg}`;
+  return `
+  <span class="kicker">Sua recomendação</span>
+  <h2>${ehNome()}, o seu caso é de <span class="accent">implementação</span></h2>
+  <p class="sub">Pelo que você respondeu, não faz sentido perder semanas montando tudo sozinha. O caminho mais rápido é a gente <b>instalar a IA no seu negócio</b>, sob medida.</p>
+
+  <ul class="stack">
+    <li><span class="ck">✓</span><span><b>Diagnóstico</b> do seu negócio pra achar onde a IA gera mais resultado primeiro.</span></li>
+    <li><span class="ck">✓</span><span><b>IA implementada de ponta a ponta:</b> atendimento, conteúdo, processos e dados.</span></li>
+    <li><span class="ck">✓</span><span><b>Feito com você</b>, no seu ritmo, sem você precisar virar técnica.</span></li>
+    <li><span class="ck">✓</span><span><b>Acompanhamento</b> pra garantir que funciona de verdade, não só na teoria.</span></li>
+  </ul>
+
+  <div class="proof">
+    <span class="tag">Vagas limitadas</span>
+    A implementação é conduzida pessoalmente pela Raquel e o time. São poucos negócios por mês.
+  </div>
+
+  <div class="guarantee">
+    <span class="green" style="font-size:20px">✅</span>
+    <div><b>Seu contato já entrou na nossa fila.</b> Nosso time vai te chamar pra um diagnóstico. Pra adiantar, fala com a gente agora mesmo.</div>
+  </div>
+
+  <a class="cta" href="${wa}" target="_blank" rel="noopener" onclick="try{if(window.fbq)fbq('track','Contact',{content_name:'implementacao-ia'});(window.dataLayer=window.dataLayer||[]).push({event:'lead_implementacao',...utms});}catch(e){}" style="margin-top:22px">Quero falar sobre a implementação 🚀</a>
+  `;
 }
 
 function renderOferta(){
