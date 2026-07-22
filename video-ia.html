@@ -222,5 +222,17 @@ fbq('track','PageView');
 
 <footer>© 2026 Raquel Mateus · <span class="hi">Gestão, processos e IA</span></footer>
 
+<script>
+  // Propaga UTMs/tracking (utm_*, fbclid, gclid, ref, src) da URL atual para o CTA do quiz,
+  // pra origem do lead não se perder no caminho video-ia -> quiz -> CRM/checkout.
+  (function(){
+    var qs = location.search;
+    if(!qs || qs.length < 2) return;
+    document.querySelectorAll('a[href^="/quizz-8020claude"]').forEach(function(a){
+      var base = a.getAttribute('href').split('?')[0];
+      a.setAttribute('href', base + qs);
+    });
+  })();
+</script>
 </body>
 </html>
