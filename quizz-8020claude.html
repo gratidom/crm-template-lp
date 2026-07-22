@@ -424,6 +424,20 @@ function trackCheckout(){
   try{ if(window.fbq) fbq('track','InitiateCheckout',{value:97, currency:'BRL', content_name:'80/20 Claude'}); }catch(e){}
 }
 
+/* monta as respostas do quiz em formato legível [{pergunta, resposta}] para o CRM
+   registrar na trajetória do lead (o CRM não entende os índices numéricos internos). */
+function respostasLegiveis(){
+  const out = [];
+  for(const s of steps){
+    if(s.tipo !== 'pergunta' || !s.k) continue;
+    const idx = respostas[s.k];
+    if(idx == null || !s.opts || !s.opts[idx]) continue;
+    const pergunta = (s.dyn ? s.dyn(respostas) : (s.h || s.k)).replace(/<[^>]+>/g, '').trim();
+    out.push({ pergunta: pergunta, resposta: s.opts[idx].t });
+  }
+  return out;
+}
+
 /* envia o lead direto pro CRM 360 (endpoint público de captação, CORS liberado).
    best-effort: não bloqueia a navegação nem quebra o quiz se falhar. */
 function enviarLead(){
@@ -440,7 +454,7 @@ function enviarLead(){
         consent: true,
         intent: intent,                                  // 'implementacao' | 'self_service'
         tags: [ querImplementacao ? 'quer-implementacao' : 'self-service', 'quiz-8020claude' ],
-        respostas: {...respostas},                       // respostas do quiz p/ qualificação
+        respostas: respostasLegiveis(),                  // [{pergunta, resposta}] legível p/ a trajetória do lead
         utm: {
           source: utms.utm_source, medium: utms.utm_medium, campaign: utms.utm_campaign,
           content: utms.utm_content, term: utms.utm_term
