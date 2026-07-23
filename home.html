@@ -16,248 +16,212 @@ fbq('track','PageView');
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=508480498054006&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel -->
 <title>Raquel Mateus — gestão, processos e IA</title>
-<meta name="description" content="Os links da Raquel Mateus: 80/20 Claude, diagnóstico, template de CRM, Missão do Dia, VO2 Club, MentorIA e mais." />
+<meta name="description" content="Os links da Raquel Mateus: 80/20 Claude, MentorIA, Template de CRM, diagnóstico grátis, Missão do Dia, VO2 Club e mais." />
 <link rel="icon" href="logo-rm-simbolo.png" type="image/png" />
 <meta property="og:title" content="Raquel Mateus — gestão, processos e IA" />
-<meta property="og:description" content="Negócios rodando com o Claude. Escolhe por onde começar." />
+<meta property="og:description" content="Negócios rodando com IA. Escolhe uma carta." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0a0a0a; --ink:#f5f2ec; --muted:rgba(245,242,236,.58);
-    --orange:#FF6A00; --line:rgba(245,242,236,.13); --line2:rgba(245,242,236,.07);
-    --green:#22c55e;
-    --sans:'Plus Jakarta Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{overflow-x:hidden}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
-  ::selection{background:var(--orange);color:#0a0a0a}
-  .mono{font-family:var(--mono)}
-  .o{color:var(--orange)}
+:root{--bg:#0a0a0a;--card:#111;--ink:#f5f2ec;--muted:rgba(245,242,236,.55);--orange:#FF6A00;--line:rgba(245,242,236,.14);
+--sans:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--orange);color:#0a0a0a}
+.page{max-width:640px;margin:0 auto;padding:0 20px}
 
-  .page{max-width:680px;margin:0 auto;padding:0 20px}
+header{text-align:center;padding:52px 0 10px}
+.path{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.path b{color:var(--orange)}
+h1{font-size:clamp(36px,9vw,54px);font-weight:800;letter-spacing:-.035em;line-height:1;margin-top:12px}
+h1 .o{color:var(--orange)}
+.tag{color:var(--muted);font-size:14px;margin-top:10px;font-family:var(--mono)}
 
-  /* ===== reveal ===== */
-  .rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
-  .rv.in{opacity:1;transform:none}
+/* ===== fita de seção ===== */
+.tape{display:inline-block;background:var(--orange);color:#0a0a0a;font-family:var(--mono);font-size:11.5px;font-weight:700;
+letter-spacing:2px;text-transform:uppercase;padding:9px 18px;transform:rotate(-2.5deg);margin:36px 0 18px;position:relative;z-index:2;
+box-shadow:5px 5px 0 rgba(245,242,236,.15)}
+.tape.alt{transform:rotate(1.8deg)}
 
-  /* ===== header ===== */
-  header{padding:58px 0 0;position:relative}
-  .path{font-family:var(--mono);font-size:12.5px;color:var(--muted);letter-spacing:.5px}
-  .path .tilde{color:var(--orange)}
-  h1{font-size:clamp(38px,9vw,58px);font-weight:800;letter-spacing:-.035em;line-height:.98;margin-top:16px}
-  .tag{color:var(--muted);font-size:clamp(15px,3.8vw,17px);margin-top:14px;max-width:44ch}
-  .tag b{color:var(--ink);font-weight:600}
-  .typeline{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:20px;min-height:19px}
-  .typeline .ps{color:var(--orange);font-weight:700}
-  .typeline .ok{color:var(--green)}
-  .caret{display:inline-block;width:7px;height:13px;background:var(--orange);vertical-align:-2px;animation:blinkc 1s steps(1) infinite}
-  @keyframes blinkc{50%{opacity:0}}
+/* ===== deck ===== */
+.deck{padding:2px 0 6px;perspective:900px}
+.card{position:relative;display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;
+padding:24px 22px;margin-top:-10px;transform:rotate(var(--r,0deg));transition:transform .25s ease,box-shadow .25s ease,border-color .25s;
+box-shadow:9px 10px 0 rgba(255,106,0,.16);will-change:transform}
+.card:first-child{margin-top:0}
+.card:nth-child(odd){--r:-1.6deg}
+.card:nth-child(even){--r:1.8deg;margin-left:12px}
+.card:nth-child(3n){--r:-2.4deg;margin-left:-8px}
+.card:hover{transform:rotate(0) translateY(-8px) scale(1.02);box-shadow:14px 16px 0 rgba(255,106,0,.3);border-color:rgba(255,106,0,.6);z-index:5}
+.card h2{font-size:clamp(21px,5.4vw,26px);font-weight:800;letter-spacing:-.02em;padding-right:96px}
+.card p{color:var(--muted);font-size:14px;margin-top:6px;max-width:44ch}
+.card .foot{display:flex;align-items:center;gap:10px;margin-top:14px}
+.card .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,106,0,.45);border-radius:99px;padding:4px 10px}
+.card .arw{margin-left:auto;font-family:var(--mono);font-size:20px;font-weight:700;color:var(--orange);transition:transform .2s}
+.card:hover .arw{transform:translateX(6px)}
 
-  /* régua do header com mascote sentado */
-  .headrule{position:relative;border-bottom:1px solid var(--line);margin-top:34px;padding-top:14px}
-  .headrule .clawd{position:absolute;right:14px;bottom:-1px;width:46px}
+/* selo lançamento (80/20) */
+.sale{position:absolute;top:16px;right:16px;background:var(--orange);color:#0a0a0a;font-family:var(--mono);font-weight:700;
+font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 11px;border-radius:8px;transform:rotate(3deg);
+box-shadow:3px 3px 0 rgba(245,242,236,.2);animation:pisca 1.15s steps(1) infinite;text-align:center;line-height:1.35}
+.sale small{display:block;font-size:14px;letter-spacing:.5px}
+@keyframes pisca{50%{opacity:.25}}
 
-  /* ===== labels de seção ===== */
-  .ls{font-family:var(--mono);font-size:12.5px;color:var(--orange);letter-spacing:.5px;margin:34px 0 12px;display:block}
-  .ls .dim{color:var(--muted)}
+/* mascote espiando entre cartões */
+.peekwrap{position:relative;z-index:0}
+.peek{position:absolute;top:-26px;right:44px;width:46px;z-index:-1;animation:peekf 4s ease-in-out infinite}
+@keyframes peekf{0%,100%{transform:translateY(10px)}50%{transform:translateY(-2px)}}
 
-  /* ===== linhas de link ===== */
-  .rows{border-top:1px solid var(--line)}
-  .row{display:grid;grid-template-columns:46px 1fr auto;gap:6px 14px;align-items:center;padding:20px 10px;border-bottom:1px solid var(--line2);position:relative;transition:background .16s ease,color .16s ease}
-  .row .i{grid-column:1;grid-row:1;font-family:var(--mono);font-size:12px;color:var(--muted);transition:color .16s}
-  .row h2{grid-column:2;grid-row:1;font-size:clamp(18px,4.6vw,23px);font-weight:800;letter-spacing:-.02em;line-height:1.15}
-  .row p{grid-column:2;grid-row:2;color:var(--muted);font-size:13.5px;transition:color .16s}
-  .row .go{grid-column:3;grid-row:1/3;display:flex;align-items:center;gap:10px}
-  .row .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,106,0,.45);border-radius:99px;padding:4px 10px;white-space:nowrap;transition:all .16s}
-  .row .arw{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--orange);transition:transform .18s ease,color .16s}
-  .row:hover{background:var(--orange);color:#0a0a0a}
-  .row:hover .i,.row:hover p{color:rgba(10,10,10,.72)}
-  .row:hover .chip{color:#0a0a0a;border-color:rgba(10,10,10,.55)}
-  .row:hover .arw{color:#0a0a0a;transform:translateX(6px)}
-  .row:active{transform:scale(.99)}
-  @media(max-width:520px){
-    .row{grid-template-columns:34px 1fr auto;padding:18px 6px}
-    .row .chip{display:none}
-  }
+/* ===== footer ===== */
+footer{padding:44px 0 50px;text-align:center}
+.soc{display:flex;justify-content:center;gap:14px}
+.soc a{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border:1px solid var(--line);border-radius:99px;
+color:var(--ink);transition:all .18s ease}
+.soc a svg{width:22px;height:22px;display:block}
+.soc a:hover{background:var(--orange);color:#0a0a0a;border-color:var(--orange);transform:translateY(-4px) rotate(-4deg);box-shadow:4px 6px 0 rgba(255,106,0,.25)}
+.cop{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:28px;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.4px}
+.cop .clawd{width:34px}
+.cop .hi{color:var(--orange);font-weight:700}
 
-  /* ===== quebra: mascote atravessando ===== */
-  .break{position:relative;margin:52px 0 8px;border-bottom:1px solid var(--line);height:34px}
-  .break .clawd{position:absolute;bottom:-1px;left:0;width:38px;animation:crawl 22s linear infinite}
-  @keyframes crawl{from{transform:translateX(-50px)}to{transform:translateX(calc(100vw + 50px))}}
-  .break .lbl{position:absolute;right:0;bottom:8px;font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+/* ===== mascote ===== */
+.clawd{display:block}
+.clawd .px{fill:var(--orange)}.clawd .eye{fill:#0a0a0a}.clawd .shine{fill:#fff}
+.clawd .legB{opacity:0}
+.clawd .lids{fill:var(--orange);transform-box:fill-box;transform-origin:center;transform:scaleY(0);animation:blink 4.6s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(0)}95%,98%{transform:scaleY(1)}}
+.clawd .armR{transform-box:fill-box;transform-origin:20% 95%}
+.clawd.wave .armR{animation:wavef 1.6s ease-in-out infinite}
+@keyframes wavef{0%,100%{transform:rotate(0)}25%{transform:rotate(-38deg)}55%{transform:rotate(8deg)}}
 
-  /* ===== footer ===== */
-  footer{margin-top:56px;border-top:1px solid var(--line)}
-  .soc{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-  .soc a{font-family:var(--mono);font-size:12.5px;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:9px 16px;transition:all .15s}
-  .soc a:hover{color:var(--orange);border-color:var(--orange);transform:translateY(-2px)}
-  .cop{display:flex;align-items:center;gap:12px;padding:26px 0 40px;margin-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.4px}
-  .cop .clawd{width:36px;flex:0 0 auto}
-  .cop .hi{color:var(--orange);font-weight:700}
-
-  /* ===== mascote ===== */
-  .clawd{display:block}
-  .clawd .px{fill:var(--orange)}
-  .clawd .eye{fill:#0a0a0a}
-  .clawd .shine{fill:#fff}
-  .clawd .legB{opacity:0}
-  .clawd.walk .legA{animation:legA .5s steps(1) infinite}
-  .clawd.walk .legB{animation:legB .5s steps(1) infinite}
-  @keyframes legA{0%,49%{opacity:1}50%,100%{opacity:0}}
-  @keyframes legB{0%,49%{opacity:0}50%,100%{opacity:1}}
-  .clawd .lids{fill:var(--orange);transform-box:fill-box;transform-origin:center;transform:scaleY(0);animation:blink 4.6s infinite}
-  @keyframes blink{0%,94%,100%{transform:scaleY(0)}95%,98%{transform:scaleY(1)}}
-  .clawd .armR{transform-box:fill-box;transform-origin:20% 95%}
-  .clawd.wave .armR{animation:wave 1.6s ease-in-out infinite}
-  @keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(-38deg)}55%{transform:rotate(8deg)}}
-  .bob{animation:bob 3.2s ease-in-out infinite}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-
-  @media (prefers-reduced-motion: reduce){
-    .rv{opacity:1;transform:none;transition:none}
-    .break .clawd,.bob,.caret,.clawd.walk .legA,.clawd.walk .legB,.clawd.wave .armR,.clawd .lids{animation:none !important}
-    .clawd .legB{opacity:0}
-    .break .clawd{transform:translateX(30vw)}
-  }
+@media (prefers-reduced-motion: reduce){
+  .peek,.sale,.clawd .lids,.clawd.wave .armR{animation:none !important}
+  .card{transition:none}
+}
+@media(max-width:400px){.card h2{padding-right:84px}}
 </style>
 </head>
 <body>
-
 <div class="page">
 
-  <!-- ===== HEADER ===== -->
-  <header>
-    <div class="path rv"><span class="tilde">~</span>/raquel-mateus <span class="tilde">$</span> whoami</div>
-    <h1 class="rv">Raquel Mateus<span class="o">.</span></h1>
-    <p class="tag rv"><b>Gestão, processos e IA.</b> Eu rodo negócios inteiros com o Claude — e tudo que eu ensino e vendo sai da minha própria operação.</p>
-    <div class="typeline rv" id="typeline"><span class="ps">$</span> <span class="caret"></span></div>
-    <div class="headrule rv">
-      <svg class="clawd bob" viewBox="0 0 16 13" aria-hidden="true">
-        <g class="armL"><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
-        <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
-        <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
-        <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
-        <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
-        <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
-        <rect class="eye" x="7" y="8" width="2" height="1"/>
-        <g class="legA"><rect class="px" x="3" y="10" width="1" height="2"/><rect class="px" x="7" y="10" width="1" height="2"/><rect class="px" x="11" y="10" width="1" height="2"/></g>
-        <g class="legB"><rect class="px" x="5" y="10" width="1" height="2"/><rect class="px" x="9" y="10" width="1" height="2"/><rect class="px" x="12" y="10" width="1" height="2"/></g>
+<header>
+  <div class="path">~/raquel-mateus <b>$</b> ls</div>
+  <h1>Raquel Mateus<span class="o">.</span></h1>
+  <div class="tag">gestão, processos e IA — escolhe uma carta ↓</div>
+</header>
+
+<main>
+
+  <!-- ===== PRODUTOS E SERVIÇOS ===== -->
+  <span class="tape">✳ produtos e serviços</span>
+  <div class="deck">
+    <a class="card" href="/8020claude" onclick="clique('8020-claude')">
+      <span class="sale">Lançamento<small>R$97</small></span>
+      <h2>80/20 Claude</h2>
+      <p>Os 20% do Claude que geram 80% do resultado no seu negócio.</p>
+      <div class="foot"><span class="chip">curso</span><span class="arw">→</span></div>
+    </a>
+    <a class="card" href="https://mentoria.raquelmateus.com.br" onclick="clique('mentoria')">
+      <h2>MentorIA</h2>
+      <p>Gestão e IA instaladas no seu negócio, comigo do lado.</p>
+      <div class="foot"><span class="chip">mentoria</span><span class="arw">→</span></div>
+    </a>
+    <a class="card" href="/crm-template" onclick="clique('template-crm')">
+      <h2>Template de CRM</h2>
+      <p>O CRM completo pra organizar leads, vendas e clientes.</p>
+      <div class="foot"><span class="chip">sistema</span><span class="arw">→</span></div>
+    </a>
+  </div>
+
+  <!-- ===== GRÁTIS ===== -->
+  <span class="tape alt">✳ grátis</span>
+  <div class="deck">
+    <a class="card" href="https://upwise.raquelmateus.com.br/facq2-optin" onclick="clique('diagnostico')">
+      <h2>Diagnóstico</h2>
+      <p>10 sinais de que você virou o gargalo do seu negócio.</p>
+      <div class="foot"><span class="chip">comece aqui</span><span class="arw">→</span></div>
+    </a>
+  </div>
+
+  <!-- ===== PÁGINAS ===== -->
+  <span class="tape">✳ páginas</span>
+  <div class="deck">
+    <a class="card" href="/video-ia" onclick="clique('video-ia')">
+      <h2>Video IA</h2>
+      <p>Como eu rodo meus negócios inteiros com IA — direto ao ponto.</p>
+      <div class="foot"><span class="chip">assista</span><span class="arw">→</span></div>
+    </a>
+    <a class="card" href="/quizz-8020claude" onclick="clique('quiz')">
+      <h2>Quiz</h2>
+      <p>Descubra seu caminho pra colocar a IA pra trabalhar por você.</p>
+      <div class="foot"><span class="chip">2 min</span><span class="arw">→</span></div>
+    </a>
+  </div>
+
+  <!-- ===== OUTROS NEGÓCIOS ===== -->
+  <span class="tape alt">✳ outros negócios</span>
+  <div class="deck peekwrap">
+    <svg class="peek clawd" viewBox="0 0 16 13" aria-hidden="true">
+      <g><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
+      <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
+      <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
+      <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
+      <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
+      <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
+      <rect class="eye" x="7" y="8" width="2" height="1"/>
+    </svg>
+    <a class="card" href="https://pessoal.uaisystem.com.br" onclick="clique('missao-do-dia')">
+      <h2>Missão do Dia</h2>
+      <p>O jogo de micro-metas que organiza a sua rotina, um dia de cada vez.</p>
+      <div class="foot"><span class="chip">app</span><span class="arw">→</span></div>
+    </a>
+    <a class="card" href="https://vo2club.com.br" onclick="clique('vo2-club')">
+      <h2>VO2 Club</h2>
+      <p>A plataforma do corredor: corridas, treinos e assessoria.</p>
+      <div class="foot"><span class="chip">corrida</span><span class="arw">→</span></div>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <div class="soc">
+    <a href="https://instagram.com/raquelmateus7" onclick="clique('instagram')" aria-label="Instagram" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.5" y="2.5" width="19" height="19" rx="5.2"/>
+        <circle cx="12" cy="12" r="4.4"/>
+        <circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" stroke="none"/>
       </svg>
-    </div>
-  </header>
-
-  <!-- ===== CLAUDE PRA NEGÓCIOS ===== -->
-  <main>
-    <span class="ls rv"><span class="dim">$</span> ls ./claude-para-negocios/</span>
-    <nav class="rows rv" aria-label="Claude para negócios">
-
-      <a class="row" href="/8020claude" onclick="clique('8020-claude')">
-        <span class="i">/01</span>
-        <h2>80/20 Claude</h2>
-        <span class="go"><span class="chip">curso · R$97</span><span class="arw">→</span></span>
-        <p>Os 20% do Claude que geram 80% do resultado no seu negócio.</p>
-      </a>
-
-      <a class="row" href="/video-ia" onclick="clique('video-ia')">
-        <span class="i">/02</span>
-        <h2>Video IA</h2>
-        <span class="go"><span class="chip">assista</span><span class="arw">→</span></span>
-        <p>Como eu rodo meus negócios inteiros com IA — direto ao ponto.</p>
-      </a>
-
-      <a class="row" href="https://upwise.raquelmateus.com.br/facq2-optin" onclick="clique('diagnostico')">
-        <span class="i">/03</span>
-        <h2>Diagnóstico</h2>
-        <span class="go"><span class="chip">grátis</span><span class="arw">→</span></span>
-        <p>10 sinais de que você virou o gargalo do seu negócio.</p>
-      </a>
-
-      <a class="row" href="/crm-template" onclick="clique('template-crm')">
-        <span class="i">/04</span>
-        <h2>Template de CRM</h2>
-        <span class="go"><span class="chip">sistema</span><span class="arw">→</span></span>
-        <p>O CRM completo pra organizar leads, vendas e clientes.</p>
-      </a>
-
-      <a class="row" href="/quizz-8020claude" onclick="clique('quiz')">
-        <span class="i">/05</span>
-        <h2>Quiz</h2>
-        <span class="go"><span class="chip">2 min</span><span class="arw">→</span></span>
-        <p>Descubra seu caminho pra colocar a IA pra trabalhar por você.</p>
-      </a>
-
-      <a class="row" href="https://mentoria.raquelmateus.com.br" onclick="clique('mentoria')">
-        <span class="i">/06</span>
-        <h2>MentorIA</h2>
-        <span class="go"><span class="chip">mentoria</span><span class="arw">→</span></span>
-        <p>Gestão e IA instaladas no seu negócio, comigo do lado.</p>
-      </a>
-
-    </nav>
-
-    <!-- ===== QUEBRA ===== -->
-    <div class="break" aria-hidden="true">
-      <span class="lbl">outros negócios</span>
-      <svg class="clawd walk" viewBox="0 0 16 13">
-        <g class="armL"><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
-        <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
-        <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
-        <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
-        <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
-        <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
-        <rect class="eye" x="7" y="8" width="2" height="1"/>
-        <g class="legA"><rect class="px" x="3" y="10" width="1" height="2"/><rect class="px" x="7" y="10" width="1" height="2"/><rect class="px" x="11" y="10" width="1" height="2"/></g>
-        <g class="legB"><rect class="px" x="5" y="10" width="1" height="2"/><rect class="px" x="9" y="10" width="1" height="2"/><rect class="px" x="12" y="10" width="1" height="2"/></g>
+    </a>
+    <a href="https://www.youtube.com/@raquelmateus8" onclick="clique('youtube')" aria-label="YouTube" title="YouTube">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="5.2" width="20" height="13.6" rx="4"/>
+        <path d="M10 9.3 L15.4 12 L10 14.7 Z" fill="currentColor" stroke="none"/>
       </svg>
-    </div>
-
-    <!-- ===== OUTROS NEGÓCIOS ===== -->
-    <span class="ls rv"><span class="dim">$</span> cd ../outros-negocios/ <span class="dim">&amp;&amp;</span> ls</span>
-    <nav class="rows rv" aria-label="Outros negócios">
-
-      <a class="row" href="https://pessoal.uaisystem.com.br" onclick="clique('missao-do-dia')">
-        <span class="i">/07</span>
-        <h2>Missão do Dia</h2>
-        <span class="go"><span class="chip">app</span><span class="arw">→</span></span>
-        <p>O jogo de micro-metas que organiza a sua rotina, um dia de cada vez.</p>
-      </a>
-
-      <a class="row" href="https://vo2club.com.br" onclick="clique('vo2-club')">
-        <span class="i">/08</span>
-        <h2>VO2 Club</h2>
-        <span class="go"><span class="chip">corrida</span><span class="arw">→</span></span>
-        <p>A plataforma do corredor: corridas, treinos e assessoria.</p>
-      </a>
-
-    </nav>
-  </main>
-
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <div class="soc rv">
-      <a href="https://instagram.com/raquelmateus7" onclick="clique('instagram')">instagram/@raquelmateus7</a>
-      <a href="mailto:contato@gratidomdigital.com" onclick="clique('email')">contato@gratidomdigital.com</a>
-    </div>
-    <div class="cop">
-      <svg class="clawd wave" viewBox="0 0 16 13" aria-hidden="true">
-        <g class="armL"><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
-        <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
-        <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
-        <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
-        <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
-        <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
-        <rect class="eye" x="7" y="8" width="2" height="1"/>
-        <g class="legA"><rect class="px" x="3" y="10" width="1" height="2"/><rect class="px" x="7" y="10" width="1" height="2"/><rect class="px" x="11" y="10" width="1" height="2"/></g>
-        <g class="legB"><rect class="px" x="5" y="10" width="1" height="2"/><rect class="px" x="9" y="10" width="1" height="2"/><rect class="px" x="12" y="10" width="1" height="2"/></g>
+    </a>
+    <a href="https://wa.me/5534999399333" onclick="clique('whatsapp')" aria-label="WhatsApp" title="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.8a9.2 9.2 0 0 0-7.9 13.9L3 21.2l4.6-1.1A9.2 9.2 0 1 0 12 2.8Z"/>
+        <path d="M8.6 8.4c-.3 1.6.8 3.9 2.2 5.2 1.4 1.3 3.4 2.2 4.6 1.7.5-.2.8-.7.9-1.2l-2-1.3-1 .8c-.8-.3-2.1-1.5-2.5-2.3l.8-1-1.1-2.2c-.6 0-1.4.5-1.9 1.3Z" fill="currentColor" stroke="none"/>
       </svg>
-      <span>© 2026 Raquel Mateus · <span class="hi">gestão, processos e IA</span></span>
-    </div>
-  </footer>
+    </a>
+  </div>
+  <div class="cop">
+    <svg class="clawd wave" viewBox="0 0 16 13" aria-hidden="true">
+      <g><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
+      <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
+      <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
+      <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
+      <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
+      <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
+      <rect class="eye" x="7" y="8" width="2" height="1"/>
+      <g class="legA"><rect class="px" x="3" y="10" width="1" height="2"/><rect class="px" x="7" y="10" width="1" height="2"/><rect class="px" x="11" y="10" width="1" height="2"/></g>
+    </svg>
+    <span>© 2026 <span class="hi">Raquel Mateus</span> · gestão, processos e IA</span>
+  </div>
+</footer>
 
 </div>
 
@@ -267,43 +231,18 @@ function clique(nome){
   try{ if(window.fbq) fbq('trackCustom','LinkClick',{link:nome}); }catch(e){}
 }
 
-/* reveal escalonado */
-try{
-  const els = [...document.querySelectorAll('.rv')];
-  els.forEach((el,i)=> el.style.transitionDelay = Math.min(i*70, 420)+'ms');
-  const io = new IntersectionObserver(es=>{
-    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  },{threshold:.1});
-  els.forEach(el=>io.observe(el));
-}catch(e){ document.querySelectorAll('.rv').forEach(el=>el.classList.add('in')); }
-
-/* linha digitada do header (respeita reduced motion) */
-(function(){
-  const el = document.getElementById('typeline');
-  if(!el) return;
-  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){
-    el.innerHTML = '<span class="ps">$</span> ia "toca meus negócios comigo" <span class="ok">✓</span>';
-    return;
-  }
-  const frases = [
-    {cmd:'ia "toca meus negócios comigo"', out:'✓ rodando desde 2024'},
-    {cmd:'escolhe um link aí embaixo', out:'✓ é por lá que começa'}
-  ];
-  let fi=0, ch=0;
-  function type(){
-    const f = frases[fi];
-    if(ch <= f.cmd.length){
-      el.innerHTML = '<span class="ps">$</span> ' + f.cmd.slice(0,ch) + '<span class="caret"></span>';
-      ch++;
-      setTimeout(type, 42 + Math.random()*44);
-    }else{
-      el.innerHTML = '<span class="ps">$</span> ' + f.cmd + ' <span class="ok">' + f.out + '</span>';
-      fi = (fi+1) % frases.length; ch = 0;
-      setTimeout(type, 3400);
-    }
-  }
-  setTimeout(type, 700);
-})();
+/* tilt 3D seguindo o mouse (desktop; celular fica com o tap padrão) */
+if(matchMedia('(hover:hover) and (prefers-reduced-motion: no-preference)').matches){
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('pointermove', e=>{
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left)/r.width - .5;
+      const y = (e.clientY - r.top)/r.height - .5;
+      card.style.transform = `rotate(0deg) translateY(-8px) scale(1.02) rotateX(${(-y*7).toFixed(2)}deg) rotateY(${(x*9).toFixed(2)}deg)`;
+    });
+    card.addEventListener('pointerleave', ()=>{ card.style.transform=''; });
+  });
+}
 </script>
 </body>
 </html>
