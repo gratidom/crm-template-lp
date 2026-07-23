@@ -57,19 +57,18 @@ box-shadow:9px 10px 0 rgba(255,106,0,.16);will-change:transform}
 .card:nth-child(even){--r:1.8deg;margin-left:12px}
 .card:nth-child(3n){--r:-2.4deg;margin-left:-8px}
 .card:hover{transform:rotate(0) translateY(-8px) scale(1.02);box-shadow:14px 16px 0 rgba(255,106,0,.3);border-color:rgba(255,106,0,.6);z-index:5}
-.card h2{font-size:clamp(21px,5.4vw,26px);font-weight:800;letter-spacing:-.02em;padding-right:96px}
+.card h2{font-size:clamp(21px,5.4vw,26px);font-weight:800;letter-spacing:-.02em}
 .card p{color:var(--muted);font-size:14px;margin-top:6px;max-width:44ch}
 .card .foot{display:flex;align-items:center;gap:10px;margin-top:14px}
 .card .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,106,0,.45);border-radius:99px;padding:4px 10px}
 .card .arw{margin-left:auto;font-family:var(--mono);font-size:20px;font-weight:700;color:var(--orange);transition:transform .2s}
 .card:hover .arw{transform:translateX(6px)}
 
-/* selo lançamento (80/20) */
-.sale{position:absolute;top:16px;right:16px;background:var(--orange);color:#0a0a0a;font-family:var(--mono);font-weight:700;
-font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:7px 11px;border-radius:8px;transform:rotate(3deg);
-box-shadow:3px 3px 0 rgba(245,242,236,.2);animation:pisca 1.15s steps(1) infinite;text-align:center;line-height:1.35}
-.sale small{display:block;font-size:14px;letter-spacing:.5px}
-@keyframes pisca{50%{opacity:.25}}
+/* botão "Sou cliente" no topo direito */
+.topcta{position:absolute;top:16px;right:16px;z-index:20;font-family:var(--mono);font-size:12px;letter-spacing:.5px;
+color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:9px 15px;background:rgba(10,10,10,.85);
+backdrop-filter:blur(6px);transition:all .15s ease}
+.topcta:hover{background:var(--orange);color:#0a0a0a;border-color:var(--orange);transform:translateY(-2px)}
 
 /* mascote espiando entre cartões */
 .peekwrap{position:relative;z-index:0}
@@ -98,14 +97,15 @@ color:var(--ink);transition:all .18s ease}
 @keyframes wavef{0%,100%{transform:rotate(0)}25%{transform:rotate(-38deg)}55%{transform:rotate(8deg)}}
 
 @media (prefers-reduced-motion: reduce){
-  .peek,.sale,.clawd .lids,.clawd.wave .armR{animation:none !important}
+  .peek,.clawd .lids,.clawd.wave .armR{animation:none !important}
   .card{transition:none}
 }
-@media(max-width:400px){.card h2{padding-right:84px}}
 </style>
 </head>
 <body>
 <div class="page">
+
+<a class="topcta" href="https://360.raquelmateus.com.br/portal/entrar" onclick="clique('sou-cliente')">Sou cliente →</a>
 
 <header>
   <div class="path">~/raquel-mateus <b>$</b> ls</div>
@@ -119,7 +119,6 @@ color:var(--ink);transition:all .18s ease}
   <span class="tape">✳ produtos e serviços</span>
   <div class="deck">
     <a class="card" href="/8020claude" onclick="clique('8020-claude')">
-      <span class="sale">Lançamento<small>R$97</small></span>
       <h2>80/20 Claude</h2>
       <p>Os 20% do Claude que geram 80% do resultado no seu negócio.</p>
       <div class="foot"><span class="chip">curso</span><span class="arw">→</span></div>
