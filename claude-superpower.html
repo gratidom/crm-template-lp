@@ -332,15 +332,45 @@ function trackCTA(origem){
   try{ if(window.fbq) fbq('trackCustom','SuperpowerCTA',{origem:origem}); }catch(e){}
 }
 
-/* copiar comando */
+/* copiar comando — com feedback garantido em qualquer navegador/webview */
 function copiar(id,btn){
-  const txt = document.getElementById(id).textContent;
-  const ok = ()=>{ btn.textContent='copiado ✓'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent='copiar';btn.classList.remove('ok')},2200);
-    try{ if(window.fbq) fbq('trackCustom','SuperpowerCopy',{cmd:id}); }catch(e){} };
-  try{ navigator.clipboard.writeText(txt).then(ok); }
-  catch(e){
-    const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
-    try{ document.execCommand('copy'); ok(); }catch(e2){} document.body.removeChild(ta);
+  const txt = document.getElementById(id).textContent.trim();
+
+  const feito = ()=>{
+    btn.textContent='copiado ✓'; btn.classList.add('ok');
+    setTimeout(()=>{ btn.textContent='copiar'; btn.classList.remove('ok'); },2400);
+    try{ if(window.fbq) fbq('trackCustom','SuperpowerCopy',{cmd:id}); }catch(e){}
+  };
+
+  /* último recurso: seleciona o comando pro usuário copiar manualmente */
+  const manual = ()=>{
+    try{
+      const r=document.createRange(); r.selectNodeContents(document.getElementById(id));
+      const s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }catch(e){}
+    btn.textContent='segure e copie';
+    setTimeout(()=>{ btn.textContent='copiar'; },2800);
+  };
+
+  /* fallback: textarea invisível + execCommand (funciona em webviews antigas) */
+  const fallback = ()=>{
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=txt; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='0'; ta.style.left='0'; ta.style.opacity='0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select(); ta.setSelectionRange(0, txt.length);
+      const okc = document.execCommand('copy');
+      document.body.removeChild(ta);
+      okc ? feito() : manual();
+    }catch(e){ manual(); }
+  };
+
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    /* .then(feito, fallback): rejeição do clipboard (permissão/webview) cai no fallback */
+    navigator.clipboard.writeText(txt).then(feito, fallback);
+  }else{
+    fallback();
   }
 }
 
