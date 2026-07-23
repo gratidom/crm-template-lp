@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Meta Pixel (Raquel Mateus 02) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','508480498054006');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=508480498054006&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+<title>Claude Superpowers — o plugin que transforma o Claude Code | Raquel Mateus</title>
+<meta name="description" content="O plugin que faz o Claude Code planejar antes de agir: brainstorming, Spec, TDD e revisão automática. Guia de instalação em 2 comandos, grátis." />
+<link rel="icon" href="logo-rm-simbolo.png" type="image/png" />
+<meta property="og:title" content="Claude Superpowers — o plugin que transforma o Claude Code" />
+<meta property="og:description" content="Instale em 2 comandos: brainstorming, Spec, TDD e revisão automática no Claude Code." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a; --ink:#f5f2ec; --muted:rgba(245,242,236,.60);
+    --orange:#FF6A00; --line:rgba(245,242,236,.13); --line2:rgba(245,242,236,.07);
+    --green:#22c55e;
+    --sans:'Plus Jakarta Sans',system-ui,sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  html,body{overflow-x:hidden}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--orange);color:#0a0a0a}
+  .o{color:var(--orange)}
+  .mono{font-family:var(--mono)}
+
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease}
+  .rv.in{opacity:1;transform:none}
+
+  /* ===== topbar ===== */
+  .topbar{position:sticky;top:0;z-index:40;background:rgba(10,10,10,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .topbar .row{max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 24px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:13px;letter-spacing:.5px;color:var(--muted)}
+  .brand img{width:26px;height:auto;filter:brightness(0) invert(1)}
+  .brand b{color:var(--ink);font-weight:700}
+  .brand .tilde{color:var(--orange)}
+  .btn{display:inline-block;background:var(--orange);color:#0a0a0a;font-weight:800;font-family:inherit;font-size:15px;border:none;border-radius:8px;padding:13px 22px;cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(245,242,236,.22)}
+  .btn.small{font-size:13.5px;padding:10px 16px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+  .btn.ghost:hover{border-color:var(--orange);color:var(--orange);transform:none}
+  @media(max-width:560px){.brand span.path{display:none}}
+
+  /* ===== hero ===== */
+  .hero{max-width:1120px;margin:0 auto;padding:72px 24px 64px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .kick{font-family:var(--mono);font-size:12.5px;letter-spacing:1px;color:var(--orange);display:block;margin-bottom:22px}
+  .hero h1{font-size:clamp(36px,5.8vw,66px);font-weight:800;letter-spacing:-.035em;line-height:1.04}
+  .hero .lead{color:var(--muted);font-size:clamp(16px,2vw,18.5px);margin-top:22px;max-width:48ch}
+  .hero .lead b{color:var(--ink);font-weight:600}
+  .hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;align-items:center}
+  .hero .by{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:20px}
+  .hero .by b{color:var(--ink);font-weight:700}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:50px;gap:44px}}
+
+  /* ===== terminal ===== */
+  .termwrap{position:relative}
+  .term{background:#111;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:10px 10px 0 rgba(255,106,0,.14)}
+  .term .bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line2);background:#151515}
+  .term .bar i{width:10px;height:10px;border-radius:99px;background:#2e2e2e;display:block}
+  .term .bar i:first-child{background:rgba(255,106,0,.8)}
+  .term .bar span{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .term .body{padding:20px 18px 24px;font-family:var(--mono);font-size:13px;line-height:1.95;min-height:190px}
+  .term .ps{color:var(--orange);font-weight:700}
+  .term .out{color:var(--muted)}
+  .term .ok{color:var(--green)}
+  .caret{display:inline-block;width:8px;height:15px;background:var(--orange);vertical-align:-2px;animation:blinkc 1s steps(1) infinite}
+  @keyframes blinkc{50%{opacity:0}}
+  @media(max-width:560px){.term .body{font-size:11px}}
+
+  /* ===== mascote ===== */
+  .clawd{display:block}
+  .clawd .px{fill:var(--orange)}
+  .clawd .eye{fill:#0a0a0a}
+  .clawd .shine{fill:#fff}
+  .clawd .legB{opacity:0}
+  .clawd .lids{fill:var(--orange);transform-box:fill-box;transform-origin:center;transform:scaleY(0);animation:blink 4.6s infinite}
+  @keyframes blink{0%,94%,100%{transform:scaleY(0)}95%,98%{transform:scaleY(1)}}
+  .clawd .armR{transform-box:fill-box;transform-origin:20% 95%}
+  .clawd.wave .armR{animation:wave 1.6s ease-in-out infinite}
+  @keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(-38deg)}55%{transform:rotate(8deg)}}
+  .bob{animation:bob 3.2s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  .sit{position:absolute;top:-33px;right:26px;width:52px;z-index:2}
+
+  /* ===== seções ===== */
+  .wrap{max-width:1120px;margin:0 auto;padding:80px 24px}
+  .shead{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:8px}
+  .shead .n{font-family:var(--mono);font-size:13px;color:var(--orange)}
+  .shead h2{font-size:clamp(26px,3.8vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .shead .hint{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:none}
+  @media(min-width:760px){.shead .hint{display:block}}
+  p.body{color:var(--muted);font-size:clamp(15px,3.6vw,17px);margin-top:16px}
+  p.body b{color:var(--ink);font-weight:600}
+
+  .quote{border-left:2px solid var(--orange);padding:6px 0 6px 20px;margin-top:28px;font-size:clamp(16.5px,2.2vw,20px);color:var(--muted);max-width:58ch;font-style:italic}
+  .quote b{color:var(--ink);font-style:normal}
+
+  /* features */
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
+  .fcard{border:1px solid var(--line);border-radius:16px;background:#0e0e0e;padding:22px 20px}
+  .fcard .fk{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);display:block}
+  .fcard h3{font-size:17.5px;font-weight:800;margin-top:10px}
+  .fcard p{color:var(--muted);font-size:14.5px;margin-top:6px;line-height:1.55}
+  @media(max-width:640px){.feat{grid-template-columns:1fr}}
+
+  /* segurança: checklist */
+  .sec{list-style:none;margin:30px 0 0;display:flex;flex-direction:column;gap:13px}
+  .sec li{display:flex;gap:13px;align-items:flex-start;font-size:clamp(15px,3.6vw,16.5px);line-height:1.55;border:1px solid var(--line);border-radius:14px;background:#0e0e0e;padding:17px 20px}
+  .sec li .ck{color:var(--green);flex:0 0 auto;font-weight:800;font-family:var(--mono);font-size:14px;line-height:1.6}
+  .sec li b{font-weight:700;color:var(--ink)}
+  .sec li span{color:var(--muted)}
+  .sec a{color:var(--orange);text-decoration:underline;text-underline-offset:3px}
+
+  /* instalação: passos com terminal + copiar */
+  #instalar{scroll-margin-top:80px}
+  .step{border:1px solid var(--line);border-radius:16px;background:#0e0e0e;padding:24px 22px;margin-top:22px}
+  .step .sn{display:flex;align-items:baseline;gap:14px}
+  .step .num{font-family:var(--mono);font-weight:700;font-size:13px;color:#0a0a0a;background:var(--orange);border-radius:8px;padding:4px 10px}
+  .step h3{font-size:clamp(17px,3vw,20px);font-weight:800}
+  .step p{color:var(--muted);font-size:14.5px;margin-top:10px}
+  .cmd{display:flex;align-items:center;gap:12px;margin-top:16px;background:#111;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .cmd code{font-family:var(--mono);font-size:clamp(11.5px,2.6vw,14px);color:var(--ink);flex:1;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+  .cmd code::before{content:'$ ';color:var(--orange);font-weight:700}
+  .copy{flex:0 0 auto;font-family:var(--mono);font-size:11.5px;letter-spacing:.5px;color:var(--orange);border:1px solid rgba(255,106,0,.45);background:transparent;border-radius:8px;padding:8px 13px;cursor:pointer;transition:all .15s}
+  .copy:hover{background:var(--orange);color:#0a0a0a}
+  .copy.ok{background:var(--green);border-color:var(--green);color:#0a0a0a}
+  .note{display:flex;gap:13px;align-items:flex-start;border-left:2px solid var(--orange);padding:4px 0 4px 18px;margin-top:26px;font-size:15px;color:var(--muted)}
+  .note b{color:var(--ink)}
+
+  /* ajuda */
+  .help{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+  .help h2{font-size:clamp(26px,3.8vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.1}
+  .help p{color:var(--muted);font-size:16px;margin-top:16px;max-width:44ch}
+  .helpcard{position:relative;background:#101010;border:1px solid var(--line);border-radius:14px;padding:30px 26px;box-shadow:12px 12px 0 rgba(255,106,0,.16);text-align:center}
+  .helpcard .btn{width:100%;margin-top:6px}
+  .helpcard .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:14px}
+  .peek{position:absolute;top:-31px;left:30px;width:50px}
+  @media(max-width:860px){.help{grid-template-columns:1fr;gap:36px}}
+
+  .rule{max-width:1120px;margin:0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+
+  footer{border-top:1px solid var(--line)}
+  footer .wrap{padding:32px 24px 42px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.4px}
+  footer .hi{color:var(--orange);font-weight:700}
+  footer a{text-decoration:underline;text-underline-offset:3px}
+  footer a:hover{color:var(--orange)}
+  .bye{display:flex;align-items:center;gap:12px}
+  .bye .clawd{width:40px}
+
+  @media (prefers-reduced-motion: reduce){
+    .rv{opacity:1;transform:none;transition:none}
+    .bob,.caret,.clawd.wave .armR,.clawd .lids{animation:none !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="row">
+    <div class="brand">
+      <img src="logo-rm-simbolo.png" alt="Raquel Mateus">
+      <span class="path"><span class="tilde">~</span>/raquel-mateus/<b>claude-superpower</b></span>
+    </div>
+    <a class="btn small" href="#instalar" onclick="trackCTA('topo')">Instalar grátis ↓</a>
+  </div>
+</div>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div>
+      <span class="kick">// plugin gratuito para o Claude Code</span>
+      <h1>O plugin que dá <span class="o">superpoderes</span> ao Claude Code.</h1>
+      <p class="lead">Transforma o Claude Code de um assistente que escreve código quando você pede em um sistema que <b>planeja antes de agir</b> — com brainstorming, Spec, TDD e revisão automática.</p>
+      <div class="actions">
+        <a class="btn" href="#instalar" onclick="trackCTA('hero')">Instalar em 2 comandos</a>
+        <a class="btn ghost" href="#oque">O que ele faz ↓</a>
+      </div>
+      <div class="by">criado por <b>Jesse Vincent</b> · Prime Radiant — open source</div>
+    </div>
+
+    <div class="termwrap rv">
+      <svg class="clawd sit bob" viewBox="0 0 16 13" aria-hidden="true">
+        <g><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
+        <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
+        <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
+        <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
+        <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
+        <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
+        <rect class="eye" x="7" y="8" width="2" height="1"/>
+        <g class="legA"><rect class="px" x="3" y="10" width="1" height="2"/><rect class="px" x="7" y="10" width="1" height="2"/><rect class="px" x="11" y="10" width="1" height="2"/></g>
+      </svg>
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i><span>claude-code — superpowers</span></div>
+        <div class="body" id="termBody"><span class="ps">$</span> <span class="caret"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ================= 01 O QUE É ================= -->
+  <section id="oque">
+    <div class="wrap">
+      <div class="shead rv"><span class="n">01</span><h2>Por que esse é o plugin mais importante</h2><span class="hint">o que é</span></div>
+      <p class="quote rv">"Sem ele, o Claude Code tende a pular direto para a implementação — <b>e criar problemas que só aparecem tarde demais</b>."</p>
+      <p class="body rv">Ao detectar que você está construindo algo, o Superpowers automaticamente inicia um processo de brainstorming, gera um Spec, cria um plano de implementação detalhado e só então começa a implementar.</p>
+      <div class="feat rv">
+        <div class="fcard"><span class="fk">01 · pensar</span><h3>Brainstorming automático</h3><p>Antes de qualquer linha de código, o sistema pensa junto com você no que precisa ser construído.</p></div>
+        <div class="fcard"><span class="fk">02 · planejar</span><h3>Spec + plano detalhado</h3><p>Gera um documento de especificação e um plano de implementação antes de começar.</p></div>
+        <div class="fcard"><span class="fk">03 · testar</span><h3>TDD integrado</h3><p>Escreve o teste antes do código. A abordagem que profissionais usam, agora automática.</p></div>
+        <div class="fcard"><span class="fk">04 · revisar</span><h3>Revisão automática</h3><p>Revisão de código e debugging estruturado entre cada etapa do desenvolvimento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ================= 02 SEGURANÇA ================= -->
+  <section>
+    <div class="wrap">
+      <div class="shead rv"><span class="n">02</span><h2>É seguro instalar?</h2><span class="hint">segurança</span></div>
+      <p class="body rv">Sim. O Superpowers é <b>open source</b> — qualquer pessoa pode ver exatamente o que ele faz antes de instalar. O repositório está público em <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:underline;text-underline-offset:3px">github.com/obra/superpowers</a>.</p>
+      <ul class="sec rv">
+        <li><span class="ck">[✓]</span><span><b>Criador conhecido.</b> Jesse Vincent é figura pública na comunidade de desenvolvimento, com histórico verificável.</span></li>
+        <li><span class="ck">[✓]</span><span><b>Não acessa a internet.</b> O plugin funciona offline, sem enviar ou receber dados externos.</span></li>
+        <li><span class="ck">[✓]</span><span><b>Não coleta dados.</b> Nenhuma informação sua ou do seu código é enviada a terceiros.</span></li>
+        <li><span class="ck">[✓]</span><span><b>Apenas instruções em markdown.</b> O plugin é um conjunto de instruções que o Claude lê antes de agir. Simples assim.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ================= 03 INSTALAÇÃO ================= -->
+  <section id="instalar">
+    <div class="wrap">
+      <div class="shead rv"><span class="n">03</span><h2>Dois comandos. Pronto.</h2><span class="hint">instalação</span></div>
+      <p class="body rv">Rode os comandos abaixo <b>dentro do Claude Code</b>, um por vez. Depois de instalar, feche e reabra o Claude Code.</p>
+
+      <div class="step rv">
+        <div class="sn"><span class="num">1</span><h3>Registrar o repositório como fonte confiável</h3></div>
+        <p>Este comando adiciona o marketplace do Superpowers como uma fonte de plugins reconhecida pelo Claude Code.</p>
+        <div class="cmd">
+          <code id="cmd1">/plugin marketplace add obra/superpowers-marketplace</code>
+          <button class="copy" onclick="copiar('cmd1',this)">copiar</button>
+        </div>
+      </div>
+
+      <div class="step rv">
+        <div class="sn"><span class="num">2</span><h3>Instalar o Superpowers</h3></div>
+        <p>Este comando faz a instalação do plugin em si. Execute após o primeiro ter sido concluído.</p>
+        <div class="cmd">
+          <code id="cmd2">/plugin install superpowers@superpowers-marketplace</code>
+          <button class="copy" onclick="copiar('cmd2',this)">copiar</button>
+        </div>
+      </div>
+
+      <div class="note rv"><div><b>Depois de instalar, feche e reabra o Claude Code.</b> A partir daí, o Superpowers ativa automaticamente sempre que você começar a descrever algo que quer construir.</div></div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- ================= 04 AJUDA ================= -->
+  <section>
+    <div class="wrap">
+      <div class="shead rv"><span class="n">04</span><h2>Ficou com dúvidas?</h2><span class="hint">posso ajudar</span></div>
+      <div class="help" style="margin-top:36px">
+        <div class="rv">
+          <h2>Posso te ajudar a <span class="o">configurar tudo.</span></h2>
+          <p>Me envie seu desafio — será um prazer analisar e te ajudar a solucionar.</p>
+        </div>
+        <div class="helpcard rv">
+          <svg class="clawd peek bob" viewBox="0 0 16 13" aria-hidden="true">
+            <g><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
+            <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
+            <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
+            <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
+            <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
+            <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
+            <rect class="eye" x="7" y="8" width="2" height="1"/>
+          </svg>
+          <span class="tag">// resposta da própria Raquel</span>
+          <a class="btn" href="https://wa.me/5534999399333?text=Ol%C3%A1%20Raquel!%20Quero%20ajuda%20para%20instalar%20e%20configurar%20o%20Superpowers%20no%20Claude%20Code." target="_blank" rel="noopener" onclick="trackCTA('whatsapp')">Falar com a Raquel 💬</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="bye">
+      <svg class="clawd wave" viewBox="0 0 16 13" aria-hidden="true">
+        <g><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
+        <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
+        <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
+        <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
+        <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
+        <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
+        <rect class="eye" x="7" y="8" width="2" height="1"/>
+        <g class="legA"><rect class="px" x="3" y="10" width="1" height="2"/><rect class="px" x="7" y="10" width="1" height="2"/><rect class="px" x="11" y="10" width="1" height="2"/></g>
+      </svg>
+      <span>© 2026 Raquel Mateus · <span class="hi">gestão, processos e IA</span></span>
+    </div>
+    <a href="/">← todos os links</a>
+  </div>
+</footer>
+
+<script>
+/* rastreio dos CTAs (Meta custom) */
+function trackCTA(origem){
+  try{ if(window.fbq) fbq('trackCustom','SuperpowerCTA',{origem:origem}); }catch(e){}
+}
+
+/* copiar comando */
+function copiar(id,btn){
+  const txt = document.getElementById(id).textContent;
+  const ok = ()=>{ btn.textContent='copiado ✓'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent='copiar';btn.classList.remove('ok')},2200);
+    try{ if(window.fbq) fbq('trackCustom','SuperpowerCopy',{cmd:id}); }catch(e){} };
+  try{ navigator.clipboard.writeText(txt).then(ok); }
+  catch(e){
+    const ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); ok(); }catch(e2){} document.body.removeChild(ta);
+  }
+}
+
+/* reveal on scroll */
+try{
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+}catch(e){ document.querySelectorAll('.rv').forEach(el=>el.classList.add('in')); }
+
+/* terminal do hero: digita a instalação em loop */
+(function(){
+  const body = document.getElementById('termBody');
+  if(!body) return;
+  const staticHtml = '<span class="ps">$</span> /plugin marketplace add obra/superpowers-marketplace<br><span class="out">→ <span class="ok">marketplace registrado ✓</span></span><br><span class="ps">$</span> /plugin install superpowers@superpowers-marketplace<br><span class="out">→ <span class="ok">superpowers instalado ✓</span> reinicie o Claude Code</span>';
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){ body.innerHTML = staticHtml; return; }
+
+  const demos = [
+    {cmd:'/plugin marketplace add obra/superpowers-marketplace', out:'→ <span class="ok">marketplace registrado ✓</span>'},
+    {cmd:'/plugin install superpowers@superpowers-marketplace',  out:'→ <span class="ok">superpowers instalado ✓</span>'},
+    {cmd:'constrói o meu novo produto',                          out:'→ brainstorming iniciado… <span class="ok">planejar antes de agir ✓</span>'}
+  ];
+  let di=0, chi=0, lines=[];
+  const esc = s=>s.replace(/</g,'&lt;');
+  function paint(cur){
+    body.innerHTML = lines.join('<br>') + (lines.length?'<br>':'') +
+      '<span class="ps">$</span> '+esc(cur)+'<span class="caret"></span>';
+  }
+  function done(cmd,out){
+    lines.push('<span class="ps">$</span> '+esc(cmd));
+    lines.push('<span class="out">'+out+'</span>');
+    if(lines.length>4) lines = lines.slice(-4);
+    body.innerHTML = lines.join('<br>') + '<br><span class="ps">$</span> <span class="caret"></span>';
+  }
+  function type(){
+    const d = demos[di];
+    if(chi <= d.cmd.length){
+      paint(d.cmd.slice(0,chi)); chi++;
+      setTimeout(type, 34 + Math.random()*40);
+    }else{
+      setTimeout(()=>{ done(d.cmd,d.out); di=(di+1)%demos.length; chi=0; setTimeout(type, 2100); }, 420);
+    }
+  }
+  setTimeout(type, 800);
+})();
+</script>
+</body>
+</html>
