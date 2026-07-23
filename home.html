@@ -34,12 +34,16 @@ a{color:inherit;text-decoration:none}
 ::selection{background:var(--orange);color:#0a0a0a}
 .page{max-width:640px;margin:0 auto;padding:0 20px}
 
-header{text-align:center;padding:52px 0 10px}
+header{text-align:center;padding:64px 0 4px}
 .path{font-family:var(--mono);font-size:12px;color:var(--muted)}
 .path b{color:var(--orange)}
-h1{font-size:clamp(36px,9vw,54px);font-weight:800;letter-spacing:-.035em;line-height:1;margin-top:12px}
-h1 .o{color:var(--orange)}
-.tag{color:var(--muted);font-size:14px;margin-top:10px;font-family:var(--mono)}
+.tag{color:var(--muted);font-size:14px;margin-top:10px;font-family:var(--mono);font-weight:400}
+
+/* dinossauro pixel patrulhando o topo esquerdo */
+.toppet{position:absolute;top:17px;left:16px;width:30px;z-index:20;animation:patrol 9s ease-in-out infinite}
+.toppet svg{animation:face 9s steps(1) infinite}
+@keyframes patrol{0%,100%{transform:translateX(0)}50%{transform:translateX(72px)}}
+@keyframes face{0%,49%{transform:scaleX(1)}50%,99%{transform:scaleX(-1)}}
 
 /* ===== fita de seção ===== */
 .tape{display:inline-block;background:var(--orange);color:#0a0a0a;font-family:var(--mono);font-size:11.5px;font-weight:700;
@@ -90,6 +94,10 @@ color:var(--ink);transition:all .18s ease}
 .clawd{display:block}
 .clawd .px{fill:var(--orange)}.clawd .eye{fill:#0a0a0a}.clawd .shine{fill:#fff}
 .clawd .legB{opacity:0}
+.clawd.walk .legA{animation:legA .45s steps(1) infinite}
+.clawd.walk .legB{animation:legB .45s steps(1) infinite}
+@keyframes legA{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes legB{0%,49%{opacity:0}50%,100%{opacity:1}}
 .clawd .lids{fill:var(--orange);transform-box:fill-box;transform-origin:center;transform:scaleY(0);animation:blink 4.6s infinite}
 @keyframes blink{0%,94%,100%{transform:scaleY(0)}95%,98%{transform:scaleY(1)}}
 .clawd .armR{transform-box:fill-box;transform-origin:20% 95%}
@@ -97,7 +105,8 @@ color:var(--ink);transition:all .18s ease}
 @keyframes wavef{0%,100%{transform:rotate(0)}25%{transform:rotate(-38deg)}55%{transform:rotate(8deg)}}
 
 @media (prefers-reduced-motion: reduce){
-  .peek,.clawd .lids,.clawd.wave .armR{animation:none !important}
+  .peek,.clawd .lids,.clawd.wave .armR,.toppet,.toppet svg,.clawd.walk .legA,.clawd.walk .legB{animation:none !important}
+  .clawd .legB{opacity:0}
   .card{transition:none}
 }
 </style>
@@ -107,10 +116,23 @@ color:var(--ink);transition:all .18s ease}
 
 <a class="topcta" href="https://360.raquelmateus.com.br/portal/entrar" onclick="clique('sou-cliente')">Sou cliente →</a>
 
+<span class="toppet" aria-hidden="true">
+  <svg class="clawd walk" viewBox="0 0 16 13">
+    <g><rect class="px" x="1" y="4" width="1" height="1"/><rect class="px" x="0" y="3" width="1" height="1"/><rect class="px" x="1" y="3" width="1" height="1"/></g>
+    <g class="armR"><rect class="px" x="14" y="4" width="1" height="1"/><rect class="px" x="15" y="3" width="1" height="1"/><rect class="px" x="14" y="3" width="1" height="1"/></g>
+    <rect class="px" x="4" y="3" width="8" height="1"/><rect class="px" x="3" y="4" width="10" height="1"/><rect class="px" x="2" y="5" width="12" height="4"/><rect class="px" x="3" y="9" width="10" height="1"/>
+    <rect class="shine" x="4" y="5" width="2" height="2"/><rect class="eye" x="5" y="6" width="1" height="1"/>
+    <rect class="shine" x="10" y="5" width="2" height="2"/><rect class="eye" x="10" y="6" width="1" height="1"/>
+    <rect class="lids" x="4" y="5" width="2" height="2"/><rect class="lids" x="10" y="5" width="2" height="2"/>
+    <rect class="eye" x="7" y="8" width="2" height="1"/>
+    <g class="legA"><rect class="px" x="3" y="10" width="1" height="2"/><rect class="px" x="7" y="10" width="1" height="2"/><rect class="px" x="11" y="10" width="1" height="2"/></g>
+    <g class="legB"><rect class="px" x="5" y="10" width="1" height="2"/><rect class="px" x="9" y="10" width="1" height="2"/><rect class="px" x="12" y="10" width="1" height="2"/></g>
+  </svg>
+</span>
+
 <header>
   <div class="path">~/raquel-mateus <b>$</b> ls</div>
-  <h1>Raquel Mateus<span class="o">.</span></h1>
-  <div class="tag">gestão, processos e IA — escolhe uma carta ↓</div>
+  <h1 class="tag">gestão, processos e IA — escolhe uma carta ↓</h1>
 </header>
 
 <main>
