@@ -282,11 +282,11 @@ try{
   const el = document.getElementById('typeline');
   if(!el) return;
   if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches){
-    el.innerHTML = '<span class="ps">$</span> claude "toca meus negócios comigo" <span class="ok">✓</span>';
+    el.innerHTML = '<span class="ps">$</span> ia "toca meus negócios comigo" <span class="ok">✓</span>';
     return;
   }
   const frases = [
-    {cmd:'claude "toca meus negócios comigo"', out:'✓ rodando desde 2024'},
+    {cmd:'ia "toca meus negócios comigo"', out:'✓ rodando desde 2024'},
     {cmd:'escolhe um link aí embaixo', out:'✓ é por lá que começa'}
   ];
   let fi=0, ch=0;
